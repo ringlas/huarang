@@ -7,5 +7,8 @@ GET     /                           controllers.Application.index()
 POST    /bars                       controllers.Application.add()
 GET     /bars                       controllers.Application.getBars()
 
+# Gamebook pages
+GET     /gamebook/display/:number              controllers.Gamebook.display(number: Integer)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

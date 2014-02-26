@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Bar extends Model {
 
     @Id
-    public String id;
+    public int id;
 
     public String name;
 }

@@ -4,23 +4,28 @@
 # --- !Ups
 
 create table bar (
-  id                        varchar(255) not null,
+  id                        integer auto_increment not null,
   name                      varchar(255),
   constraint pk_bar primary key (id))
 ;
 
-create sequence bar_seq;
+create table episode (
+  id                        integer auto_increment not null,
+  number                    integer,
+  text                      text,
+  constraint pk_episode primary key (id))
+;
 
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists bar;
+drop table bar;
 
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table episode;
 
-drop sequence if exists bar_seq;
+SET FOREIGN_KEY_CHECKS=1;
 
