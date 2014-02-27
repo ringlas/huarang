@@ -29,5 +29,17 @@ public class Application extends Controller {
 
         return ok(Json.toJson(bars));
     }
+    
+    public static String fixLinks(String paragraph, List<Link> links)
+    {
+        int len = links.size();
+        for(int i = 0; i< len; i++)
+        {
+            Link l = links.get(i);
+            String str = String.format("<a href=\"gamebook/display?id=epNumber%s\">%s</a>", links.get(i).go_to_episode_number, l.link_text);
+            paragraph = paragraph.replaceAll("###\\d+###", str);
+        }
+        return paragraph;
+    }
 
 }
