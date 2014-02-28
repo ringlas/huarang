@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Bar;
 import play.*;
 import play.data.Form;
 import play.db.ebean.Model;
@@ -13,21 +12,15 @@ import java.util.List;
 
 public class Application extends Controller {
 
+    public static Result login() {
+        return ok(login.render("Login page!"));
+    }
+
+    public static Result home() {
+        return ok(home.render("Home page!"));
+    }
+
     public static Result index() {
-        return ok(index.render("My app is ready!"));
+        return ok(index.render("Index page!", 1));
     }
-
-    public static Result add() {
-        Bar bar = Form.form(Bar.class).bindFromRequest().get();
-        bar.save();
-
-        return redirect(routes.Application.index());
-    }
-
-    public static Result getBars() {
-        List<Bar> bars = new Model.Finder(String.class, Bar.class).all();
-
-        return ok(Json.toJson(bars));
-    }
-
 }
