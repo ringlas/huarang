@@ -22,7 +22,14 @@
                 Избери едно умение, в което си специалист, едно умение, в което си майстор и легендарно умение от
                 посочената по-долу таблица:
 
-                <form>
+                <form action="@routes.Gamebook.saveSkill()" method="post" id="skills">
+
+                    <input type="hidden" name="energy" value="5">
+                    <input type="hidden" name="wisdom" value="0">
+                    <input type="hidden" name="mind" value="2">
+                    <input type="hidden" name="stamina" value="5">
+                    <input type="hidden" name="codewords" value="">
+
                     <table>
                         <tr>
                             <th>Умение</th>
@@ -34,57 +41,57 @@
 
                         <tr>
                             <td>Бой с меч</td>
-                            <td><input type="radio" name="specialist" value="boi-s-mech" checked><br></td>
-                            <td><input type="radio" name="maistor" value="boi-s-mech" checked><br></td>
+                            <td><input type="radio" name="specialty" value="boi-s-mech" checked><br></td>
+                            <td><input type="radio" name="mastery" value="boi-s-mech" checked><br></td>
                             <td><input type="radio" name="legendary" value="boi-s-mech" checked><br></td>
                         </tr>
 
                         <tr>
                             <td>Стрелба с лък</td>
-                            <td><input type="radio" name="specialist" value="strelka-s-luk"><br></td>
-                            <td><input type="radio" name="maistor" value="strelka-s-luk"><br></td>
+                            <td><input type="radio" name="specialty" value="strelka-s-luk"><br></td>
+                            <td><input type="radio" name="mastery" value="strelka-s-luk"><br></td>
                             <td><input type="radio" name="legendary" value="strelka-s-luk"><br></td>
                         </tr>
 
                         <tr>
                             <td>Рефлекс</td>
-                            <td><input type="radio" name="specialist" value="refleks"><br></td>
-                            <td><input type="radio" name="maistor" value="refleks"><br></td>
+                            <td><input type="radio" name="specialty" value="refleks"><br></td>
+                            <td><input type="radio" name="mastery" value="refleks"><br></td>
                             <td><input type="radio" name="legendary" value="refleks"><br></td>
                         </tr>
 
                         <tr>
                             <td>Късмет</td>
-                            <td><input type="radio" name="specialist" value="kusmet"><br></td>
-                            <td><input type="radio" name="maistor" value="kusmet"><br></td>
+                            <td><input type="radio" name="specialty" value="kusmet"><br></td>
+                            <td><input type="radio" name="mastery" value="kusmet"><br></td>
                             <td><input type="radio" name="legendary" value="kusmet"><br></td>
                         </tr>
 
                         <tr>
                             <td>Шаманизъм</td>
-                            <td><input type="radio" name="specialist" value="shamanizym"><br></td>
-                            <td><input type="radio" name="maistor" value="shamanizym"><br></td>
+                            <td><input type="radio" name="specialty" value="shamanizym"><br></td>
+                            <td><input type="radio" name="mastery" value="shamanizym"><br></td>
                             <td><input type="radio" name="legendary" value="shamanizym"><br></td>
                         </tr>
 
                         <tr>
                             <td>Харизма</td>
-                            <td><input type="radio" name="specialist" value="harizma"><br></td>
-                            <td><input type="radio" name="maistor" value="harizma"><br></td>
+                            <td><input type="radio" name="specialty" value="harizma"><br></td>
+                            <td><input type="radio" name="mastery" value="harizma"><br></td>
                             <td><input type="radio" name="legendary" value="harizma"><br></td>
                         </tr>
 
                         <tr>
                             <td>Самоконтрол</td>
-                            <td><input type="radio" name="specialist" value="samokontrol"><br></td>
-                            <td><input type="radio" name="maistor" value="samokontrol"><br></td>
+                            <td><input type="radio" name="specialty" value="samokontrol"><br></td>
+                            <td><input type="radio" name="mastery" value="samokontrol"><br></td>
                             <td><input type="radio" name="legendary" value="samokontrol"><br></td>
                         </tr>
 
                         <tr>
                             <td>Имунитет към отрови</td>
-                            <td><input type="radio" name="specialist" value="imunitet-kum-otrovi"><br></td>
-                            <td><input type="radio" name="maistor" value="imunitet-kum-otrovi"><br></td>
+                            <td><input type="radio" name="specialty" value="imunitet-kum-otrovi"><br></td>
+                            <td><input type="radio" name="mastery" value="imunitet-kum-otrovi"><br></td>
                             <td><input type="radio" name="legendary" value="imunitet-kum-otrovi"><br></td>
                         </tr>
 
@@ -92,8 +99,8 @@
                 </form>
 
                 <div class="form-group center">
-                    <a href="home.html" class="btn back-btn">Назад</a>
-                    <a href="step2.html" class="btn go-btn">Напред</a>
+                    <a href="@routes.Application.home()" class="btn back-btn">Назад</a>
+                    <button class="btn login-btn" type="submit" form="skills">Напред</button>
                 </div>
             </div>
         </div>

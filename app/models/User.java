@@ -1,11 +1,15 @@
 package models;
 
+import org.springframework.beans.factory.annotation.Required;
+import play.api.data.validation.ValidationError;
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,10 +22,16 @@ public class User extends Model {
     private int id;
 
     @Column(name="username", length = 255)
+    @Constraints.Required
     private String username;
 
     @Column(name="password", length = 255)
+    @Constraints.Required
     private String password;
+
+    public int getId(){
+        return this.id;
+    }
 
     public void setUsername(String username){
         this.username = username;
@@ -54,4 +64,10 @@ public class User extends Model {
     public static Finder<Integer,User> find = new Finder<Integer,User>(
             Integer.class, User.class
     );
+
+//    public List<ValidationError> validate() {
+//        List<ValidationError> errors = new ArrayList<ValidationError>();
+//
+//        return errors.isEmpty() ? null : errors;
+//    }
 }

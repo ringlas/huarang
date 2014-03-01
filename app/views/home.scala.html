@@ -11,6 +11,14 @@
     <div class="bird2"></div>
 
     <div class="row">
+
+        <div class="cold-md-12">
+            @if(flash.contains("notice")) {
+            <div class="alert alert-info">@flash.get("notice")</div>
+            }
+        </div>
+        <div class="clear"></div>
+
         <div class="col-md-8">
             <h1 class="text-center">Правила за игра:</h1>
             <div class="instructions-text main-instructions">
@@ -62,8 +70,8 @@
                     е загинал. </p>
 
                 <div class="form-group center">
-                    <a href="#" class="btn back-btn">Продължи стара игра</a>
-                    <a href="step1.html" class="btn go-btn">Започни нова игра</a>
+                    <!--<a href="#" class="btn back-btn">Продължи стара игра</a>-->
+                    <a href="@routes.Gamebook.chooseSkill()" class="btn go-btn">Започни нова игра</a>
                 </div>
             </div>
         </div>

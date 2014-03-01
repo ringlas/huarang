@@ -1,9 +1,12 @@
 package controllers;
 
+import models.CharacterSheet;
 import models.Episode;
 import models.EpisodeLink;
+import models.User;
 import play.*;
 import play.data.Form;
+import play.data.*;
 import play.db.ebean.Model;
 import play.mvc.*;
 import play.libs.Json;
@@ -17,16 +20,35 @@ import static play.mvc.Results.ok;
 /**
  * Created by victor on 14-2-25.
  */
-public class Gamebook {
+public class Gamebook extends Controller {
 
+    @Security.Authenticated(Secured.class)
     public static Result chooseSkill() {
         return ok(skills.render("Skill page"));
     }
 
-    public static Result skillBonus() {
-        return ok(skillbonus.render("Skill bonus page"));
+    @Security.Authenticated(Secured.class)
+    public static Result saveSkill(){
+        // Bind the request data from the form to an object
+        CharacterSheet characterSheet = Form.form(CharacterSheet.class).bindFromRequest().get();
+        // Set the User related to that character sheet
+        characterSheet.setUser(Integer.parseInt(session().get("user_id")));
+        // Save it to the database
+        characterSheet.save();
+        return redirect(routes.Gamebook.skillBonus());
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result skillBonus() {
+
+        List<CharacterSheet> characterSheet = CharacterSheet.find.where()
+                .eq("user_id", session().get("user_id"))
+                .findList();
+
+        return ok(skillbonus.render(characterSheet.get(0)));
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result generateEpisode(int number) {
 
         Episode episode = Episode.find.byId(number);
@@ -40,19 +62,26 @@ public class Gamebook {
         }
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result displayEpisode(int number) {
 
-        return ok(index.render("Title", number));
+        List<CharacterSheet> characterSheet = CharacterSheet.find.where()
+                .eq("user_id", session().get("user_id"))
+                .findList();
+
+        return ok(index.render(number, characterSheet.get(0)));
     }
 
-//    public static String fixLinks(String paragraph, List<EpisodeLink> links) {
-//        int len = links.size();
-//        for(int i = 0; i< len; i++)
-//        {
-//            EpisodeLink l = links.get(i);
-//            String str = String.format("<a href=\"display/id=epNumber%s\">%s</a>", links.get(i).getGoToEpisode(i).getId(), l.getText());
-//            paragraph = paragraph.replaceAll("###\\d+###", str);
-//        }
-//        return paragraph;
-//    }
+    public static Result updateCharacterSheet(int number) {
+        // Bind the request data from the form to an object
+        CharacterSheet characterSheet = Form.form(CharacterSheet.class).bindFromRequest().get();
+        // Set the User related to that character sheet
+        characterSheet.setUser(Integer.parseInt(session().get("user_id")));
+        // Get the request with the submitted form data
+        Http.RequestBody body = request().body();
+        // Update the database with that particular id
+        characterSheet.update(Integer.parseInt(body.asFormUrlEncoded().get("id")[0]));
+        return redirect(routes.Gamebook.displayEpisode(number));
+    }
+
 }

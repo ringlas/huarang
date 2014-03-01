@@ -8,13 +8,16 @@ GET     /                                   controllers.Application.home()
 GET     /login                              controllers.Application.login()
 POST    /login                              controllers.Application.authenticate()
 POST    /add                                controllers.Application.createUser()
+GET     /logout                             controllers.Application.logout()
 
 # Gamebook pages
 
 GET     /skills                             controllers.Gamebook.chooseSkill()
+POST    /skills                             controllers.Gamebook.saveSkill()
 GET     /skillsbonus                        controllers.Gamebook.skillBonus()
 GET     /display/:number                    controllers.Gamebook.displayEpisode(number: Integer)
 GET     /gamebook/generate/:number          controllers.Gamebook.generateEpisode(number: Integer)
+POST    /display/:number                    controllers.Gamebook.updateCharacterSheet(number: Integer)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)

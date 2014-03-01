@@ -1,4 +1,4 @@
-@(message: String)(number: Integer)
+@(number: Integer)(characterSheet: CharacterSheet)
 
 @main("Home") {
 
@@ -46,7 +46,7 @@
 <div class="row header">
     <div id="diary">
         <div class="row">
-            <form>
+            <form action="@routes.Gamebook.updateCharacterSheet(number)" id="character-sheet" method="post">
                 <div class="col-md-4">
                     <div class="instructions-text inventory-bg">
                         <div class="corner corner1"></div>
@@ -58,22 +58,28 @@
                             <table>
                                 <tr>
                                     <td><span class="glyphicon glyphicon-fire"></span>Ки-енергия:</td>
-                                    <td><input type="text" class="form-control small-input" placeholder="5"></td>
+                                    <td>
+                                        <input type="hidden" name="id" value="@characterSheet.getId()">
+                                        <input type="hidden" name="specialty" value="@characterSheet.getSpecialty()">
+                                        <input type="hidden" name="mastery" value="@characterSheet.getMastery()">
+                                        <input type="hidden" name="legendary" value="@characterSheet.getLegendary()">
+                                        <input type="text" class="form-control small-input" name="energy" value="@characterSheet.getEnergy()">
+                                    </td>
                                 </tr>
 
                                 <tr>
                                     <td><span class="glyphicon glyphicon-heart-empty"></span>Издръжливост:</td>
-                                    <td><input type="text" class="form-control small-input" placeholder="5"></td>
+                                    <td><input type="text" class="form-control small-input" name="stamina" value="@characterSheet.getStamina()"></td>
                                 </tr>
 
                                 <tr>
                                     <td><span class="glyphicon glyphicon-book"></span>Познание:</td>
-                                    <td><input type="text" class="form-control small-input" placeholder="0"></td>
+                                    <td><input type="text" class="form-control small-input" name="wisdom" value="@characterSheet.getWisdom()"></td>
                                 </tr>
 
                                 <tr>
                                     <td><span class="glyphicon glyphicon-eye-open"></span>Съзнание:</td>
-                                    <td><input type="text" class="form-control small-input" placeholder="2"></td>
+                                    <td><input type="text" class="form-control small-input" name="mind" value="@characterSheet.getMind()"></td>
                                 </tr>
                             </table>
 
@@ -82,15 +88,38 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div id="key-words">
-                        <h3>Кодови думи:</h3>
 
-                        <p class="words"></p>
+                    <div class="instructions-text inventory-bg">
+                        <div class="corner corner1"></div>
+                        <div class="corner corner2"></div>
+                        <div class="corner corner3"></div>
+                        <div class="corner corner4"></div>
+                        <div class="inventory">
 
-                        <input id="add-word-input" type="text" class="form-control" placeholder="Добави кодова дума">
-                        <a id="add-key-word-btn" class="btn btn-default btn-grey">Добави</a>
+                            <table>
+                                <tr>
+                                    <td>Кодови думи:</td>
+                                </tr>
 
+                                <tr>
+                                    <td>
+                                        <textarea name="codewords" style="width: 183px; height: 112px;">@characterSheet.getCodewords()</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
                     </div>
+
+                    <!--<div id="key-words">-->
+                        <!--<h3>Кодови думи:</h3>-->
+
+                        <!--<p class="words"></p>-->
+
+                        <!--<input id="add-word-input" type="text" class="form-control" placeholder="Добави кодова дума">-->
+                        <!--<a id="add-key-word-btn" class="btn btn-default btn-grey">Добави</a>-->
+
+                    <!--</div>-->
                 </div>
 
                 <div class="separator"></div>
@@ -100,7 +129,7 @@
                     <div class="save-btn-frame"></div>
 
                     <div class="save-btn">
-                        <button class="btn login-btn save-big-btn">Запази</button>
+                        <button type="submit" class="btn login-btn save-big-btn">Запази</button>
                     </div>
 
                     <div class="save-btn-frame"></div>

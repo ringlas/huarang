@@ -1,4 +1,4 @@
-@(message: String)
+@(characterSheet: CharacterSheet)
 
 @main("Home") {
 <div class="row header">
@@ -22,6 +22,12 @@
 
                 <p>Ти избра следните умения:</p>
 
+                <p><strong>Специалист:</strong> @characterSheet.getSpecialty()</p>
+
+                <p><strong>Майстор:</strong> @characterSheet.getMastery()</p>
+
+                <p><strong>Легендарно умение:</strong>: @characterSheet.getLegendary()</p>
+
                 <p><b>Бонуси от Легендарните умения.</b></p>
 
                 <p>Спрямо умението, което си избрал за легендарно, се увеличават следните показатели:
@@ -29,8 +35,8 @@
 
 
                 <div class="form-group center">
-                    <a href="step1.html" class="btn back-btn">Назад</a>
-                    <a href="play.html" class="btn go-btn">Започни игра</a>
+                    <a href="@routes.Gamebook.chooseSkill()" class="btn back-btn">Назад</a>
+                    <a href="@routes.Gamebook.displayEpisode(1)" class="btn go-btn">Започни игра</a>
                 </div>
             </div>
         </div>
