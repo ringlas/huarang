@@ -6,6 +6,8 @@
 
 GET     /                                   controllers.Application.home()
 GET     /login                              controllers.Application.login()
+POST    /login                              controllers.Application.authenticate()
+POST    /add                                controllers.Application.createUser()
 
 # Gamebook pages
 

@@ -471,3 +471,9 @@ h3{
 .btn-grey:hover{
     background: #cbc3ab;
 }
+
+.error {
+    color: #ff0000;
+    font-weight: bold;
+    text-align: center;
+}

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import java.util.List;
 
 /**
  * Created by victor on 14-2-26.
@@ -32,6 +33,22 @@ public class User extends Model {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public String getPassword(){return this.password;}
+
+    public static String authenticate(String username, String password){
+        List<User> userList = find.where()
+                .eq("username", username)
+                .eq("password", password)
+                .findList();
+
+        if(userList.isEmpty()){
+            return null;
+        }
+        else {
+            return userList.get(0).getUsername();
+        }
     }
 
     public static Finder<Integer,User> find = new Finder<Integer,User>(

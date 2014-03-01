@@ -1,4 +1,4 @@
-@(message: String)
+@(form: Form[Application.Login])
 
 @main("Home") {
 <div class="row header">
@@ -15,18 +15,18 @@
 
             <p class="login-h2"> Създай акаунт: </p>
 
-            <form class="login-form">
+            <form class="login-form" method="post" action="@routes.Application.createUser()">
                 <div class="form-group">
-                    <input type="text" class="form-control input" placeholder="Потребителско име">
+                    <input type="text" name="username" class="form-control input" placeholder="Потребителско име">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control input" placeholder="Парола">
+                    <input type="password" name="password" class="form-control input" placeholder="Парола">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control input" placeholder="Повтори парола">
+                    <input type="password" name="confirm_password" class="form-control input" placeholder="Повтори парола">
                 </div>
                 <div class="form-group center">
-                    <button class="btn login-btn">Регистрация</button>
+                    <button type="submit" class="btn login-btn">Регистрация</button>
                 </div>
             </form>
 
@@ -38,18 +38,24 @@
 
         <div class="col-md-4 align-center">
             <p class="login-h2"> Вход: </p>
+            @helper.form(routes.Application.authenticate) {
 
-            <form class="login-form">
                 <div class="form-group">
-                    <input type="password" class="form-control input" placeholder="Потребителско име">
+                    <input type="text" name="username" class="form-control input" placeholder="Потребителско име">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control input" placeholder="Парола">
+                    <input type="password" name="password" class="form-control input" placeholder="Парола">
                 </div>
                 <div class="form-group center">
                     <button class="btn login-btn">Вход</button>
                 </div>
-            </form>
+
+            }
+            @if(form.hasGlobalErrors) {
+            <p class="error">
+                @form.globalError.message
+            </p>
+            }
         </div>
         <div class="col-md-1"></div>
     </div>
