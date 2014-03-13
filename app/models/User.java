@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Required;
 import play.api.data.validation.ValidationError;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+import play.libs.Crypto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,7 +51,7 @@ public class User extends Model {
     public static String authenticate(String username, String password){
         List<User> userList = find.where()
                 .eq("username", username)
-                .eq("password", password)
+                .eq("password", Crypto.sign(password))
                 .findList();
 
         if(userList.isEmpty()){

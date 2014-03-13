@@ -79,7 +79,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     }
     
     .save-btn{
-        margin: 0 auto;
+        margin: 4px auto;
         text-align: center;
     }
     

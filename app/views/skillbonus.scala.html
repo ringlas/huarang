@@ -1,6 +1,6 @@
-@(characterSheet: CharacterSheet)
+@(characterSheet: CharacterSheet)(bonus: String)
 
-@main("Home") {
+@main(".:: Хуаранг и Кумихо ::.") {
 <div class="row header">
     <div class="bird1"></div>
     <div class="logo"></div>
@@ -30,8 +30,8 @@
 
                 <p><b>Бонуси от Легендарните умения.</b></p>
 
-                <p>Спрямо умението, което си избрал за легендарно, се увеличават следните показатели:
-                </p>
+                <p>Спрямо умението, което си избрал за легендарно, се увеличават следните показатели:</p>
+                <p><strong>@bonus</strong></p>
 
 
                 <div class="form-group center">

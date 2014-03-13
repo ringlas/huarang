@@ -1,6 +1,6 @@
 @(message: String)
 
-@main("Home") {
+@main(".:: Хуаранг и Кумихо ::.") {
 <div class="row header">
     <div class="bird1"></div>
     <div class="logo"></div>
@@ -10,6 +10,14 @@
     <div class="bird2"></div>
 
     <div class="row">
+
+        <div class="cold-md-12">
+            @if(flash.contains("danger")) {
+            <div class="alert alert-danger">@flash.get("danger")</div>
+            }
+        </div>
+        <div class="clear"></div>
+
         <div class="col-md-8">
             <h1 class="text-center">Стъпка 1: Избери умения</h1>
 
@@ -41,58 +49,58 @@
 
                         <tr>
                             <td>Бой с меч</td>
-                            <td><input type="radio" name="specialty" value="boi-s-mech" checked><br></td>
-                            <td><input type="radio" name="mastery" value="boi-s-mech" checked><br></td>
-                            <td><input type="radio" name="legendary" value="boi-s-mech" checked><br></td>
+                            <td><input type="radio" name="specialty" value="Бой с меч" checked><br></td>
+                            <td><input type="radio" name="mastery" value="Бой с меч" checked><br></td>
+                            <td><input type="radio" name="legendary" value="Бой с меч" checked><br></td>
                         </tr>
 
                         <tr>
                             <td>Стрелба с лък</td>
-                            <td><input type="radio" name="specialty" value="strelka-s-luk"><br></td>
-                            <td><input type="radio" name="mastery" value="strelka-s-luk"><br></td>
-                            <td><input type="radio" name="legendary" value="strelka-s-luk"><br></td>
+                            <td><input type="radio" name="specialty" value="Стрелба с лък"><br></td>
+                            <td><input type="radio" name="mastery" value="Стрелба с лък"><br></td>
+                            <td><input type="radio" name="legendary" value="Стрелба с лък"><br></td>
                         </tr>
 
                         <tr>
                             <td>Рефлекс</td>
-                            <td><input type="radio" name="specialty" value="refleks"><br></td>
-                            <td><input type="radio" name="mastery" value="refleks"><br></td>
-                            <td><input type="radio" name="legendary" value="refleks"><br></td>
+                            <td><input type="radio" name="specialty" value="Рефлекс"><br></td>
+                            <td><input type="radio" name="mastery" value="Рефлекс"><br></td>
+                            <td><input type="radio" name="legendary" value="Рефлекс"><br></td>
                         </tr>
 
                         <tr>
                             <td>Късмет</td>
-                            <td><input type="radio" name="specialty" value="kusmet"><br></td>
-                            <td><input type="radio" name="mastery" value="kusmet"><br></td>
-                            <td><input type="radio" name="legendary" value="kusmet"><br></td>
+                            <td><input type="radio" name="specialty" value="Късмет"><br></td>
+                            <td><input type="radio" name="mastery" value="Късмет"><br></td>
+                            <td><input type="radio" name="legendary" value="Късмет"><br></td>
                         </tr>
 
                         <tr>
                             <td>Шаманизъм</td>
-                            <td><input type="radio" name="specialty" value="shamanizym"><br></td>
-                            <td><input type="radio" name="mastery" value="shamanizym"><br></td>
-                            <td><input type="radio" name="legendary" value="shamanizym"><br></td>
+                            <td><input type="radio" name="specialty" value="Шаманизъм"><br></td>
+                            <td><input type="radio" name="mastery" value="Шаманизъм"><br></td>
+                            <td><input type="radio" name="legendary" value="Шаманизъм"><br></td>
                         </tr>
 
                         <tr>
                             <td>Харизма</td>
-                            <td><input type="radio" name="specialty" value="harizma"><br></td>
-                            <td><input type="radio" name="mastery" value="harizma"><br></td>
-                            <td><input type="radio" name="legendary" value="harizma"><br></td>
+                            <td><input type="radio" name="specialty" value="Харизма"><br></td>
+                            <td><input type="radio" name="mastery" value="Харизма"><br></td>
+                            <td><input type="radio" name="legendary" value="Харизма"><br></td>
                         </tr>
 
                         <tr>
                             <td>Самоконтрол</td>
-                            <td><input type="radio" name="specialty" value="samokontrol"><br></td>
-                            <td><input type="radio" name="mastery" value="samokontrol"><br></td>
-                            <td><input type="radio" name="legendary" value="samokontrol"><br></td>
+                            <td><input type="radio" name="specialty" value="Самоконтрол"><br></td>
+                            <td><input type="radio" name="mastery" value="Самоконтрол"><br></td>
+                            <td><input type="radio" name="legendary" value="Самоконтрол"><br></td>
                         </tr>
 
                         <tr>
                             <td>Имунитет към отрови</td>
-                            <td><input type="radio" name="specialty" value="imunitet-kum-otrovi"><br></td>
-                            <td><input type="radio" name="mastery" value="imunitet-kum-otrovi"><br></td>
-                            <td><input type="radio" name="legendary" value="imunitet-kum-otrovi"><br></td>
+                            <td><input type="radio" name="specialty" value="Имунитет към отрови"><br></td>
+                            <td><input type="radio" name="mastery" value="Имунитет към отрови"><br></td>
+                            <td><input type="radio" name="legendary" value="Имунитет към отрови"><br></td>
                         </tr>
 
                     </table>

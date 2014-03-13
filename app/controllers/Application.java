@@ -7,6 +7,7 @@ import play.data.*;
 import play.db.ebean.Model;
 import play.mvc.*;
 import play.libs.Json;
+import play.libs.Crypto;
 
 import views.html.*;
 
@@ -54,8 +55,14 @@ public class Application extends Controller {
             flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
             return redirect(routes.Application.login());
         }
+
         User user = userForm.get();
+
+        // Encrypt the user password with SHA-1 algorithm and Application SALT
+        user.setPassword(Crypto.sign(user.getPassword()));
+        // Save the user
         user.save();
+
         flash("success", "Успешно създадохте нов потребител.");
         return redirect(routes.Application.login());
     }
@@ -64,11 +71,6 @@ public class Application extends Controller {
     public static Result home() {
         return ok(home.render("Home page!"));
     }
-
-//    public static Result index() {
-//
-//        return ok(index.render(1));
-//    }
 
     public static class Login {
 

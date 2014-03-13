@@ -24,6 +24,14 @@ public class Gamebook extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result chooseSkill() {
+
+        CharacterSheet characterSheet = CharacterSheet.find.where()
+                .eq("user_id", session().get("user_id")).findUnique();
+
+        if(characterSheet != null) {
+            characterSheet.delete();
+        }
+
         return ok(skills.render("Skill page"));
     }
 
@@ -33,6 +41,20 @@ public class Gamebook extends Controller {
         CharacterSheet characterSheet = Form.form(CharacterSheet.class).bindFromRequest().get();
         // Set the User related to that character sheet
         characterSheet.setUser(Integer.parseInt(session().get("user_id")));
+
+        boolean error = false;
+
+        if(characterSheet.getMastery().equals(characterSheet.getLegendary()) ||
+                characterSheet.getMastery().equals(characterSheet.getSpecialty()) ||
+                        characterSheet.getSpecialty().equals(characterSheet.getLegendary())) {
+            error = true;
+        }
+
+        if(error) {
+            flash("danger", "Трябва да изберете 3 различни умения!");
+            return redirect(routes.Gamebook.chooseSkill());
+        }
+
         // Save it to the database
         characterSheet.save();
         return redirect(routes.Gamebook.skillBonus());
@@ -45,7 +67,45 @@ public class Gamebook extends Controller {
                 .eq("user_id", session().get("user_id"))
                 .findList();
 
-        return ok(skillbonus.render(characterSheet.get(0)));
+        int latestCSIndex = characterSheet.size()-1;
+        int wisdom = characterSheet.get(latestCSIndex).getWisdom();
+        int mind   = characterSheet.get(latestCSIndex).getMind();
+
+        String bonus = "Няма бонус";
+
+        String legendary = characterSheet.get(latestCSIndex).getLegendary();
+
+        switch (legendary) {
+            case "Имунитет към отрови" :
+                bonus = "+1 т. Познание";
+                wisdom++;
+                break;
+            case "Стрелба с лък" :
+                bonus = "+1 т. Съзнание";
+                mind++;
+                break;
+            case "Бой с меч" :
+                bonus = "+1 т. Съзнание";
+                mind++;
+                break;
+            case "Самоконтрол" :
+                bonus = "+1 т. Съзнание";
+                mind++;
+                break;
+            case "Шаманизъм" :
+                bonus = "+1 т. Познание";
+                wisdom++;
+                break;
+        }
+
+        if(characterSheet.get(latestCSIndex).getBonusReceived() != true) {
+            characterSheet.get(latestCSIndex).setWisdom(wisdom);
+            characterSheet.get(latestCSIndex).setMind(mind);
+            characterSheet.get(latestCSIndex).setBonusReceived(true);
+            characterSheet.get(latestCSIndex).save();
+        }
+
+        return ok(skillbonus.render(characterSheet.get(characterSheet.size()-1), bonus));
     }
 
     @Security.Authenticated(Secured.class)
@@ -69,7 +129,25 @@ public class Gamebook extends Controller {
                 .eq("user_id", session().get("user_id"))
                 .findList();
 
-        return ok(index.render(number, characterSheet.get(0)));
+        characterSheet.get(characterSheet.size()-1).setCurrentEpisode(number);
+        characterSheet.get(characterSheet.size()-1).save();
+
+        return ok(index.render(number, characterSheet.get(characterSheet.size() - 1)));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result savedGame() {
+
+        List<CharacterSheet> characterSheet = CharacterSheet.find.where()
+                .eq("user_id", session().get("user_id"))
+                .findList();
+        try {
+            int number = characterSheet.get(characterSheet.size()-1).getCurrentEpisode();
+            return redirect(routes.Gamebook.displayEpisode(number));
+        }
+        catch (Exception e) {
+            return redirect(routes.Gamebook.chooseSkill());
+        }
     }
 
     public static Result updateCharacterSheet(int number) {

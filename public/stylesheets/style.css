@@ -437,8 +437,11 @@ h3{
 }
 
 .save-btn{
-    margin-top: 25px;
-    margin-left: 12px;
+    margin-top: 10px;
+}
+
+.save-btn a, button {
+    width: 169px;
 }
 
 .separator{
@@ -451,14 +454,14 @@ h3{
 }
 
 .save-btn-frame:first-child{
-    margin-top: 35px;
+    margin-top: 5px;
 }
 
 .save-btn-frame{
     width: 169px;
     height: 11px;
     background: url('../images/top-save-border.png') no-repeat;
-    margin-top: 25px;
+    margin-top: 5px;
 }
 
 .btn-grey{

@@ -1,6 +1,6 @@
 @(message: String)
 
-@main("Home") {
+@main(".:: Хуаранг и Кумихо ::.") {
 
 <div class="row header">
     <div class="bird1"></div>
@@ -70,8 +70,11 @@
                     е загинал. </p>
 
                 <div class="form-group center">
-                    <!--<a href="#" class="btn back-btn">Продължи стара игра</a>-->
+
+                    <a href="@routes.Gamebook.savedGame()" class="btn back-btn">Продължи стара игра</a>
+
                     <a href="@routes.Gamebook.chooseSkill()" class="btn go-btn">Започни нова игра</a>
+
                 </div>
             </div>
         </div>

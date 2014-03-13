@@ -1,6 +1,6 @@
 @(number: Integer)(characterSheet: CharacterSheet)
 
-@main("Home") {
+@main(".:: Хуаранг и Кумихо ::.") {
 
 
 <script type="text/javascript">
@@ -22,7 +22,7 @@
 
                 data.text = fixLinks(data.text, data.episodeLinks);
 
-                $('.episode').html(data.text);
+                $('.episode').html('<h1 class="episode-title text-center"> .: Епизод ' + @number + ' :. </h1>' + data.text);
             }
 
             function fixLinks(paragraph, links) {
@@ -129,7 +129,15 @@
                     <div class="save-btn-frame"></div>
 
                     <div class="save-btn">
-                        <button type="submit" class="btn login-btn save-big-btn">Запази</button>
+                        <button type="submit" class="btn login-btn">Запази</button>
+                    </div>
+
+                    <div class="save-btn">
+                        <a href="@routes.Application.home()" class="btn login-btn">Начало</a>
+                    </div>
+
+                    <div class="save-btn">
+                        <a href="@routes.Application.logout()" class="btn login-btn">Изход</a>
                     </div>
 
                     <div class="save-btn-frame"></div>
@@ -147,7 +155,6 @@
     <div class="row">
 
         <div class="col-md-12 episode">
-            <!--<h1 class="episode-title text-center"> .: Епизод 1 :. </h1>-->
 
         </div>
     </div>

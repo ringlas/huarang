@@ -12,6 +12,9 @@ create table character_sheet (
   specialty                 varchar(255),
   mastery                   varchar(255),
   legendary                 varchar(255),
+  bonus_received            tinyint(1) default 0,
+  current_episode           integer,
+  date_created              varchar(255),
   text                      text,
   user_id                   integer,
   constraint pk_character_sheet primary key (id))

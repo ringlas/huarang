@@ -27,6 +27,12 @@ public class CharacterSheet extends Model {
 
     private String legendary;
 
+    private boolean bonusReceived;
+
+    private int currentEpisode;
+
+    private String dateCreated;
+
     @Lob
     @Column(name="text", length = 512)
     private String codewords;
@@ -110,6 +116,18 @@ public class CharacterSheet extends Model {
     public String getCodewords() {
         return this.codewords;
     }
+
+    public void setBonusReceived(boolean bonusReceived) { this.bonusReceived = bonusReceived; }
+
+    public boolean getBonusReceived() { return this.bonusReceived; }
+
+    public void setCurrentEpisode(int currentEpisode) { this.currentEpisode = currentEpisode; }
+
+    public int getCurrentEpisode() { return this.currentEpisode; }
+
+    public void setDateCreated(String dateCreated) { this.dateCreated = dateCreated; }
+
+    public String getDateCreated() { return this.dateCreated; }
 
     public static Finder<Integer,CharacterSheet> find = new Finder<Integer,CharacterSheet>(
             Integer.class, CharacterSheet.class
