@@ -1,4 +1,4 @@
-@(characterSheet: CharacterSheet)(bonus: String)
+@(characterSheetHuarang: CharacterSheetHuarang)(bonus: String)
 
 @main(".:: Хуаранг и Кумихо ::.") {
 <div class="row header">
@@ -22,11 +22,11 @@
 
                 <p>Ти избра следните умения:</p>
 
-                <p><strong>Специалист:</strong> @characterSheet.getSpecialty()</p>
+                <p><strong>Специалист:</strong> @characterSheetHuarang.getSpecialty()</p>
 
-                <p><strong>Майстор:</strong> @characterSheet.getMastery()</p>
+                <p><strong>Майстор:</strong> @characterSheetHuarang.getMastery()</p>
 
-                <p><strong>Легендарно умение:</strong>: @characterSheet.getLegendary()</p>
+                <p><strong>Легендарно умение:</strong>: @characterSheetHuarang.getLegendary()</p>
 
                 <p><b>Бонуси от Легендарните умения.</b></p>
 

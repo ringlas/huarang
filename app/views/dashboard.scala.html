@@ -1,0 +1,44 @@
+@(message: String)
+
+@huarang.main(".:: Хуаранг и Кумихо ::.") {
+<div class="row header">
+    <div class="bird1"></div>
+    <div class="logo"></div>
+</div>
+
+<div class="login-panel">
+    <div class="bird2"></div>
+
+    <div class="row">
+
+        <div class="cold-md-12">
+            @if(flash.contains("success")) {
+            <div class="alert alert-success">@flash.get("success")</div>
+            }
+            @if(flash.contains("error")) {
+            <div class="alert alert-danger">@flash.get("error")</div>
+            }
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="col-md-12">
+
+            <h1>Потребителска страница с книги-игри</h1>
+
+            <p>Списък с книги-игри:</p>
+
+            <ul style="list-style:none;">
+                <li><a href="@routes.Application.home()">Хуаранг и Кумихо</a></li>
+                <li><a href="#">Ринглас Мечоносецът</a></li>
+            </ul>
+
+        </div>
+
+
+    </div>
+</div>
+
+}
+
+

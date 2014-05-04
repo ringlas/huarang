@@ -1,4 +1,4 @@
-@(number: Integer)(characterSheet: CharacterSheet)
+@(number: Integer)(characterSheetHuarang: CharacterSheetHuarang)
 
 @main(".:: Хуаранг и Кумихо ::.") {
 
@@ -59,27 +59,27 @@
                                 <tr>
                                     <td><span class="glyphicon glyphicon-fire"></span>Ки-енергия:</td>
                                     <td>
-                                        <input type="hidden" name="id" value="@characterSheet.getId()">
-                                        <input type="hidden" name="specialty" value="@characterSheet.getSpecialty()">
-                                        <input type="hidden" name="mastery" value="@characterSheet.getMastery()">
-                                        <input type="hidden" name="legendary" value="@characterSheet.getLegendary()">
-                                        <input type="text" class="form-control small-input" name="energy" value="@characterSheet.getEnergy()">
+                                        <input type="hidden" name="id" value="@characterSheetHuarang.getId()">
+                                        <input type="hidden" name="specialty" value="@characterSheetHuarang.getSpecialty()">
+                                        <input type="hidden" name="mastery" value="@characterSheetHuarang.getMastery()">
+                                        <input type="hidden" name="legendary" value="@characterSheetHuarang.getLegendary()">
+                                        <input type="text" class="form-control small-input" name="energy" value="@characterSheetHuarang.getEnergy()">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td><span class="glyphicon glyphicon-heart-empty"></span>Издръжливост:</td>
-                                    <td><input type="text" class="form-control small-input" name="stamina" value="@characterSheet.getStamina()"></td>
+                                    <td><input type="text" class="form-control small-input" name="stamina" value="@characterSheetHuarang.getStamina()"></td>
                                 </tr>
 
                                 <tr>
                                     <td><span class="glyphicon glyphicon-book"></span>Познание:</td>
-                                    <td><input type="text" class="form-control small-input" name="wisdom" value="@characterSheet.getWisdom()"></td>
+                                    <td><input type="text" class="form-control small-input" name="wisdom" value="@characterSheetHuarang.getWisdom()"></td>
                                 </tr>
 
                                 <tr>
                                     <td><span class="glyphicon glyphicon-eye-open"></span>Съзнание:</td>
-                                    <td><input type="text" class="form-control small-input" name="mind" value="@characterSheet.getMind()"></td>
+                                    <td><input type="text" class="form-control small-input" name="mind" value="@characterSheetHuarang.getMind()"></td>
                                 </tr>
                             </table>
 
@@ -103,7 +103,7 @@
 
                                 <tr>
                                     <td>
-                                        <textarea name="codewords" style="width: 183px; height: 112px;">@characterSheet.getCodewords()</textarea>
+                                        <textarea name="codewords" style="width: 183px; height: 112px;">@characterSheetHuarang.getCodewords()</textarea>
                                     </td>
                                 </tr>
                             </table>

@@ -30,6 +30,9 @@ public class User extends Model {
     @Constraints.Required
     private String password;
 
+    @Column(name="role", length = 255)
+    private String role;
+
     public int getId(){
         return this.id;
     }
@@ -47,6 +50,12 @@ public class User extends Model {
     }
 
     public String getPassword(){return this.password;}
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRole() { return this.role; }
 
     public static String authenticate(String username, String password){
         List<User> userList = find.where()

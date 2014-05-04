@@ -1,17 +1,12 @@
 package controllers;
 
-import models.CharacterSheet;
+import models.CharacterSheetHuarang;
 import models.Episode;
-import models.EpisodeLink;
-import models.User;
-import play.*;
 import play.data.Form;
-import play.data.*;
-import play.db.ebean.Model;
 import play.mvc.*;
 import play.libs.Json;
 
-import views.html.*;
+import views.html.huarang.*;
 
 import java.util.List;
 
@@ -25,11 +20,11 @@ public class Gamebook extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result chooseSkill() {
 
-        CharacterSheet characterSheet = CharacterSheet.find.where()
+        CharacterSheetHuarang characterSheetHuarang = CharacterSheetHuarang.find.where()
                 .eq("user_id", session().get("user_id")).findUnique();
 
-        if(characterSheet != null) {
-            characterSheet.delete();
+        if(characterSheetHuarang != null) {
+            characterSheetHuarang.delete();
         }
 
         return ok(skills.render("Skill page"));
@@ -38,15 +33,15 @@ public class Gamebook extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result saveSkill(){
         // Bind the request data from the form to an object
-        CharacterSheet characterSheet = Form.form(CharacterSheet.class).bindFromRequest().get();
+        CharacterSheetHuarang characterSheetHuarang = Form.form(CharacterSheetHuarang.class).bindFromRequest().get();
         // Set the User related to that character sheet
-        characterSheet.setUser(Integer.parseInt(session().get("user_id")));
+        characterSheetHuarang.setUser(Integer.parseInt(session().get("user_id")));
 
         boolean error = false;
 
-        if(characterSheet.getMastery().equals(characterSheet.getLegendary()) ||
-                characterSheet.getMastery().equals(characterSheet.getSpecialty()) ||
-                        characterSheet.getSpecialty().equals(characterSheet.getLegendary())) {
+        if(characterSheetHuarang.getMastery().equals(characterSheetHuarang.getLegendary()) ||
+                characterSheetHuarang.getMastery().equals(characterSheetHuarang.getSpecialty()) ||
+                        characterSheetHuarang.getSpecialty().equals(characterSheetHuarang.getLegendary())) {
             error = true;
         }
 
@@ -56,24 +51,24 @@ public class Gamebook extends Controller {
         }
 
         // Save it to the database
-        characterSheet.save();
+        characterSheetHuarang.save();
         return redirect(routes.Gamebook.skillBonus());
     }
 
     @Security.Authenticated(Secured.class)
     public static Result skillBonus() {
 
-        List<CharacterSheet> characterSheet = CharacterSheet.find.where()
+        List<CharacterSheetHuarang> characterSheetHuarang = CharacterSheetHuarang.find.where()
                 .eq("user_id", session().get("user_id"))
                 .findList();
 
-        int latestCSIndex = characterSheet.size()-1;
-        int wisdom = characterSheet.get(latestCSIndex).getWisdom();
-        int mind   = characterSheet.get(latestCSIndex).getMind();
+        int latestCSIndex = characterSheetHuarang.size()-1;
+        int wisdom = characterSheetHuarang.get(latestCSIndex).getWisdom();
+        int mind   = characterSheetHuarang.get(latestCSIndex).getMind();
 
         String bonus = "Няма бонус";
 
-        String legendary = characterSheet.get(latestCSIndex).getLegendary();
+        String legendary = characterSheetHuarang.get(latestCSIndex).getLegendary();
 
         switch (legendary) {
             case "Имунитет към отрови" :
@@ -98,14 +93,14 @@ public class Gamebook extends Controller {
                 break;
         }
 
-        if(characterSheet.get(latestCSIndex).getBonusReceived() != true) {
-            characterSheet.get(latestCSIndex).setWisdom(wisdom);
-            characterSheet.get(latestCSIndex).setMind(mind);
-            characterSheet.get(latestCSIndex).setBonusReceived(true);
-            characterSheet.get(latestCSIndex).save();
+        if(characterSheetHuarang.get(latestCSIndex).getBonusReceived() != true) {
+            characterSheetHuarang.get(latestCSIndex).setWisdom(wisdom);
+            characterSheetHuarang.get(latestCSIndex).setMind(mind);
+            characterSheetHuarang.get(latestCSIndex).setBonusReceived(true);
+            characterSheetHuarang.get(latestCSIndex).save();
         }
 
-        return ok(skillbonus.render(characterSheet.get(characterSheet.size()-1), bonus));
+        return ok(skillbonus.render(characterSheetHuarang.get(characterSheetHuarang.size()-1), bonus));
     }
 
     @Security.Authenticated(Secured.class)
@@ -125,24 +120,24 @@ public class Gamebook extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result displayEpisode(int number) {
 
-        List<CharacterSheet> characterSheet = CharacterSheet.find.where()
+        List<CharacterSheetHuarang> characterSheetHuarang = CharacterSheetHuarang.find.where()
                 .eq("user_id", session().get("user_id"))
                 .findList();
 
-        characterSheet.get(characterSheet.size()-1).setCurrentEpisode(number);
-        characterSheet.get(characterSheet.size()-1).save();
+        characterSheetHuarang.get(characterSheetHuarang.size()-1).setCurrentEpisode(number);
+        characterSheetHuarang.get(characterSheetHuarang.size()-1).save();
 
-        return ok(index.render(number, characterSheet.get(characterSheet.size() - 1)));
+        return ok(index.render(number, characterSheetHuarang.get(characterSheetHuarang.size() - 1)));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result savedGame() {
 
-        List<CharacterSheet> characterSheet = CharacterSheet.find.where()
+        List<CharacterSheetHuarang> characterSheetHuarang = CharacterSheetHuarang.find.where()
                 .eq("user_id", session().get("user_id"))
                 .findList();
         try {
-            int number = characterSheet.get(characterSheet.size()-1).getCurrentEpisode();
+            int number = characterSheetHuarang.get(characterSheetHuarang.size()-1).getCurrentEpisode();
             return redirect(routes.Gamebook.displayEpisode(number));
         }
         catch (Exception e) {
@@ -152,13 +147,13 @@ public class Gamebook extends Controller {
 
     public static Result updateCharacterSheet(int number) {
         // Bind the request data from the form to an object
-        CharacterSheet characterSheet = Form.form(CharacterSheet.class).bindFromRequest().get();
+        CharacterSheetHuarang characterSheetHuarang = Form.form(CharacterSheetHuarang.class).bindFromRequest().get();
         // Set the User related to that character sheet
-        characterSheet.setUser(Integer.parseInt(session().get("user_id")));
+        characterSheetHuarang.setUser(Integer.parseInt(session().get("user_id")));
         // Get the request with the submitted form data
         Http.RequestBody body = request().body();
         // Update the database with that particular id
-        characterSheet.update(Integer.parseInt(body.asFormUrlEncoded().get("id")[0]));
+        characterSheetHuarang.update(Integer.parseInt(body.asFormUrlEncoded().get("id")[0]));
         return redirect(routes.Gamebook.displayEpisode(number));
     }
 

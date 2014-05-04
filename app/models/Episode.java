@@ -19,6 +19,17 @@ public class Episode extends Model {
     @Column(name="text", length = 512)
     private String text;
 
+    @Column(name="number", length = 4)
+    private int number;
+
+    @ManyToOne
+    private Gamebook gamebook;
+
+    public void setGamebook(int id) {
+        Gamebook gamebook = Gamebook.find.byId(id);
+        this.gamebook = gamebook;
+    }
+
     public int getId() {
         return this.id;
     }
@@ -30,6 +41,10 @@ public class Episode extends Model {
     public void setText(String text) {
         this.text = text;
     }
+
+    public int getNumber() { return number; }
+
+    public void setNumber(int number) { this.number = number; }
 
     @OneToMany(mappedBy = "episode", cascade=CascadeType.ALL)
     public List<EpisodeLink> episodeLinks;

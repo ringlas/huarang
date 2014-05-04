@@ -10,6 +10,7 @@ import play.libs.Json;
 import play.libs.Crypto;
 
 import views.html.*;
+import views.html.huarang.*;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Application extends Controller {
     public static Result login() {
         if(session().get("username") != null){
             flash("notice", "Вече сте влезли в системата.");
-            return redirect(routes.Application.home());
+            return redirect(routes.Library.dashboard());
         }
         return ok(login.render(Form.form(Login.class)));
     }
@@ -42,8 +43,9 @@ public class Application extends Controller {
             session().clear();
             session("username", user.getUsername());
             session("user_id", Integer.toString(user.getId()));
+            session("role", user.getRole());
 
-            return redirect(routes.Application.home());
+            return redirect(routes.Library.dashboard());
         }
     }
 
@@ -58,6 +60,8 @@ public class Application extends Controller {
 
         User user = userForm.get();
 
+        // Set the default group to all registered users as public
+        user.setRole("public");
         // Encrypt the user password with SHA-1 algorithm and Application SALT
         user.setPassword(Crypto.sign(user.getPassword()));
         // Save the user
