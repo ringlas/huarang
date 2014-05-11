@@ -6,7 +6,7 @@
 <script type="text/javascript">
             $.ajax({
               dataType: "json",
-              url: '@routes.Gamebook.generateEpisode(number)',
+              url: '@routes.GamebookController.generateEpisode(number)',
               data: 1,
               success: function(response){
                 jsonData = response;
@@ -46,7 +46,7 @@
 <div class="row header">
     <div id="diary">
         <div class="row">
-            <form action="@routes.Gamebook.updateCharacterSheet(number)" id="character-sheet" method="post">
+            <form action="@routes.GamebookController.updateCharacterSheet(number)" id="character-sheet" method="post">
                 <div class="col-md-4">
                     <div class="instructions-text inventory-bg">
                         <div class="corner corner1"></div>

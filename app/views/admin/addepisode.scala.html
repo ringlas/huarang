@@ -1,0 +1,40 @@
+@(message: String)(gamebook: Gamebook)
+
+@admin(".:: Хуаранг и Кумихо ::.") {
+
+    <div class="row">
+
+        <div class="clear"></div>
+
+        <div class="col-md-12">
+
+            <h2>Добавяне на нов епизод</h2>
+
+            <form action="@controllers.admin.routes.Admin.saveGamebook()" method="post" role="form">
+
+                <div class="form-group">
+                    <label for="number">Номер:</label>
+                    <input id="number" class="form-control" type="number" name="number" value="">
+                    <input id="gamebook_id" class="form-control" type="hidden" name="gamebook_id" value="@gamebook.getId()">
+                </div>
+
+                <div class="form-group">
+                    <label for="text">Въведете текст:</label>
+                    <textarea name="text" id="text" class="form-control"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Запази</button>
+
+                <a href="@controllers.admin.routes.Admin.listGamebooks()" class="btn btn-default">Затвори</a>
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+}
+
+

@@ -18,16 +18,22 @@ GET     /dashboard                          controllers.Library.dashboard()
 
 GET     /admin                              controllers.admin.Admin.dashboard()
 GET     /admin/add/gamebook                 controllers.admin.Admin.createGamebook()
+POST    /admin/add/gamebook                 controllers.admin.Admin.saveGamebook()
+GET     /admin/list/gamebooks               controllers.admin.Admin.listGamebooks()
+POST    /admin/delete/gamebook/:id          controllers.admin.Admin.deleteGamebook(id: Integer)
+GET     /admin/edit/gamebook/:id            controllers.admin.Admin.editGamebook(id: Integer)
+GET     /admin/view/gamebook/:id            controllers.admin.Admin.viewGamebook(id: Integer)
+GET     /admin/add/episode/:gamebook_id     controllers.admin.Admin.createEpisode(gamebook_id: Integer)
 
 # Gamebook pages
 
-GET     /skills                             controllers.Gamebook.chooseSkill()
-POST    /skills                             controllers.Gamebook.saveSkill()
-GET     /skillsbonus                        controllers.Gamebook.skillBonus()
-GET     /saved                              controllers.Gamebook.savedGame()
-GET     /display/:number                    controllers.Gamebook.displayEpisode(number: Integer)
-GET     /gamebook/generate/:number          controllers.Gamebook.generateEpisode(number: Integer)
-POST    /display/:number                    controllers.Gamebook.updateCharacterSheet(number: Integer)
+GET     /skills                             controllers.GamebookController.chooseSkill()
+POST    /skills                             controllers.GamebookController.saveSkill()
+GET     /skillsbonus                        controllers.GamebookController.skillBonus()
+GET     /saved                              controllers.GamebookController.savedGame()
+GET     /display/:number                    controllers.GamebookController.displayEpisode(number: Integer)
+GET     /gamebook/generate/:number          controllers.GamebookController.generateEpisode(number: Integer)
+POST    /display/:number                    controllers.GamebookController.updateCharacterSheet(number: Integer)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)

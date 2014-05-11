@@ -1,0 +1,43 @@
+@(message: String)(gamebook: Gamebook)
+
+@admin(".:: Хуаранг и Кумихо ::.") {
+
+    <div class="row">
+
+        <div class="clear"></div>
+
+        <div class="col-md-12">
+
+            <h2>Преглед на книга-игра</h2>
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td> <strong>Заглавие:</strong> </td>
+                        <td> @gamebook.getTitle() </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Автор:</strong> </td>
+                        <td> @gamebook.getAuthor() </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Година:</strong> </td>
+                        <td> @gamebook.getYear() </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Последна промяна:</strong> </td>
+                        <td> @gamebook.getDateCreated() </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="@controllers.admin.routes.Admin.listGamebooks()" class="btn btn-default">Затвори</a>
+
+            <a href="@controllers.admin.routes.Admin.createEpisode(gamebook.getId())" class="btn btn-primary">Добави нов епизод</a>
+
+        </div>
+    </div>
+
+}
+
+

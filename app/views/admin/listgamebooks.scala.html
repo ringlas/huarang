@@ -1,0 +1,50 @@
+@(title: String)(gamebooks: List[Gamebook])
+
+@admin(".:: Хуаранг и Кумихо ::.") {
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h2>Списък с книги-игри</h2>
+
+            <a href="@controllers.admin.routes.Admin.createGamebook()" class="btn btn-success">Създай нова книга-игра</a>
+
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th>Заглавие</th>
+                        <th>Автор</th>
+                        <th>Година</th>
+                        <th>Последна промяна</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(gamebook <- gamebooks) {
+                    <tr>
+                        <td>@gamebook.getTitle()</td>
+                        <td>@gamebook.getAuthor</td>
+                        <td>@gamebook.getYear()</td>
+                        <td>@gamebook.getDateCreated()</td>
+                        <td>
+                            <form method="post" action="@controllers.admin.routes.Admin.deleteGamebook(gamebook.getId())">
+                                <a href="@controllers.admin.routes.Admin.viewGamebook(gamebook.getId())" class="btn btn-info">Прегледай</a>
+                                <a href="@controllers.admin.routes.Admin.editGamebook(gamebook.getId())" class="btn btn-warning">Редактирай</a>
+                                <button type="submit" class="btn btn-danger">Изтрий</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+
+
+}
+
+

@@ -15,7 +15,7 @@ import static play.mvc.Results.ok;
 /**
  * Created by victor on 14-2-25.
  */
-public class Gamebook extends Controller {
+public class GamebookController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result chooseSkill() {
@@ -47,12 +47,12 @@ public class Gamebook extends Controller {
 
         if(error) {
             flash("danger", "Трябва да изберете 3 различни умения!");
-            return redirect(routes.Gamebook.chooseSkill());
+            return redirect(routes.GamebookController.chooseSkill());
         }
 
         // Save it to the database
         characterSheetHuarang.save();
-        return redirect(routes.Gamebook.skillBonus());
+        return redirect(routes.GamebookController.skillBonus());
     }
 
     @Security.Authenticated(Secured.class)
@@ -138,10 +138,10 @@ public class Gamebook extends Controller {
                 .findList();
         try {
             int number = characterSheetHuarang.get(characterSheetHuarang.size()-1).getCurrentEpisode();
-            return redirect(routes.Gamebook.displayEpisode(number));
+            return redirect(routes.GamebookController.displayEpisode(number));
         }
         catch (Exception e) {
-            return redirect(routes.Gamebook.chooseSkill());
+            return redirect(routes.GamebookController.chooseSkill());
         }
     }
 
@@ -154,7 +154,7 @@ public class Gamebook extends Controller {
         Http.RequestBody body = request().body();
         // Update the database with that particular id
         characterSheetHuarang.update(Integer.parseInt(body.asFormUrlEncoded().get("id")[0]));
-        return redirect(routes.Gamebook.displayEpisode(number));
+        return redirect(routes.GamebookController.displayEpisode(number));
     }
 
 }
