@@ -30,6 +30,10 @@ public class Episode extends Model {
         this.gamebook = gamebook;
     }
 
+    public Gamebook getGamebook() { return  this.gamebook; }
+
+    public void setId(int id) { this.id = id; }
+
     public int getId() {
         return this.id;
     }

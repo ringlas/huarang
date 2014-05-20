@@ -23,7 +23,11 @@ GET     /admin/list/gamebooks               controllers.admin.Admin.listGamebook
 POST    /admin/delete/gamebook/:id          controllers.admin.Admin.deleteGamebook(id: Integer)
 GET     /admin/edit/gamebook/:id            controllers.admin.Admin.editGamebook(id: Integer)
 GET     /admin/view/gamebook/:id            controllers.admin.Admin.viewGamebook(id: Integer)
+
 GET     /admin/add/episode/:gamebook_id     controllers.admin.Admin.createEpisode(gamebook_id: Integer)
+POST    /admin/add/episode                  controllers.admin.Admin.saveEpisode()
+POST    /admin/delete/episode/:id           controllers.admin.Admin.deleteEpisode(id: Integer)
+GET     /admin/edit/episode/:id             controllers.admin.Admin.editEpisode(id: Integer)
 
 # Gamebook pages
 

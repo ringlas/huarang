@@ -1,6 +1,13 @@
-@(message: String)(gamebook: Gamebook)
+@(message: String)(gamebook: Gamebook)(episodes: List[Episode])
 
 @admin(".:: Хуаранг и Кумихо ::.") {
+
+    <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+
+    </script>
 
     <div class="row">
 
@@ -36,6 +43,39 @@
             <a href="@controllers.admin.routes.Admin.createEpisode(gamebook.getId())" class="btn btn-primary">Добави нов епизод</a>
 
         </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h2>Епизоди</h2>
+
+            <table class="table table-striped">
+                <tr>
+                    <th>Номер на епизод</th>
+                    <th>Текст</th>
+                    <th>Действие</th>
+                </tr>
+
+                @for(episode <- episodes) {
+                <tr>
+                    <td> <strong>@Html(episode.getNumber().toString).</strong> </td>
+                    <td> @Html(episode.getText()) </td>
+                    <td>
+
+                        <form method="post" action="@controllers.admin.routes.Admin.deleteEpisode(episode.getId())">
+                            <a href="@controllers.admin.routes.Admin.editEpisode(episode.getId())" class="btn btn-warning tooltipped" data-toggle="tooltip" data-placement="top" title="Редактирай"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <button type="submit" class="btn btn-danger tooltipped" data-toggle="tooltip" data-placement="top" title="Изтрий"><span class="glyphicon glyphicon-trash"></span></button>
+                        </form>
+                    </td>
+                </tr>
+                }
+            </table>
+
+
+        </div>
+
     </div>
 
 }

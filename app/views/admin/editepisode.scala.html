@@ -1,4 +1,4 @@
-@(message: String)(gamebook: Gamebook)
+@(message: String)(gamebook: Gamebook)(episode: Episode)
 
 @admin(".:: Хуаранг и Кумихо ::.") {
 
@@ -21,19 +21,22 @@
 
         <div class="col-md-12">
 
-            <h2>Добавяне на нов епизод</h2>
+            <h2>Редактиране на епизод към книга-игра @gamebook.getTitle()</h2>
 
             <form action="@controllers.admin.routes.Admin.saveEpisode()" method="post" role="form">
 
                 <div class="form-group">
                     <label for="number">Номер:</label>
-                    <input id="number" class="form-control" type="number" name="number" value="">
+                    <input id="number" class="form-control" type="number" name="number" value="@episode.getNumber()">
                     <input id="gamebook_id" class="form-control" type="hidden" name="gamebook_id" value="@gamebook.getId()">
+                    <input id="id" class="form-control" type="hidden" name="id" value="@episode.getId()">
                 </div>
 
                 <div class="form-group">
                     <label for="text">Въведете текст:</label>
-                    <textarea id="editor" name="text" id="text" class="form-control" rows="15"></textarea>
+                    <textarea id="editor" name="text" id="text" class="form-control" rows="15">
+                        @episode.getText()
+                    </textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Запази</button>
