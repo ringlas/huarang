@@ -2,6 +2,17 @@
 
 @admin(".:: Хуаранг и Кумихо ::.") {
 
+    <script>
+        $(function() {
+            $("textarea").htmlarea({
+                toolbar: [
+                    ["html"],
+                    ["bold", "italic", "underline"], /* ["bold", "italic", "underline", "|", "link", "unlink", "|"] */
+                ]
+            });
+        });
+    </script>
+
     <div class="row">
 
         <div class="clear"></div>
@@ -25,6 +36,13 @@
                 <div class="form-group">
                     <label for="year">Въведете година:</label>
                     <input id="year" class="form-control" type="number" name="year" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="editor">Въведете интро текст:</label>
+                    <textarea id="editor" name="intro" id="text" class="form-control" rows="15">
+
+                    </textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Запази</button>

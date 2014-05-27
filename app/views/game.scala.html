@@ -1,0 +1,27 @@
+@(gamebook: Gamebook)
+
+@layout(".:: Хуаранг и Кумихо ::.") {
+
+<div class="row">
+
+    <div class="col-md-12 episode">
+
+        <h3>@gamebook.getTitle()</h3>
+
+        <p> @Html(gamebook.getIntro()) </p>
+
+        <p>
+
+            <!--<a href="@controllers.routes.Library.displayEpisode(gamebook.getId(), 1)" class="btn btn-info">Започни нова игра!</a>-->
+
+            <a href="@controllers.routes.Library.startGame(gamebook.getId(), true)" class="btn btn-info">Започни нова игра!</a>
+
+            <a href="@controllers.routes.Library.startGame(gamebook.getId(), false)" class="btn btn-warning">Продължи стара игра!</a>
+        </p>
+
+    </div>
+
+</div>
+
+}
+

@@ -23,6 +23,8 @@ public class Gamebook extends Model {
     @Column(name="year", length = 4)
     private int year;
 
+    private String intro;
+
     private String dateCreated;
 
     @ManyToOne
@@ -58,12 +60,16 @@ public class Gamebook extends Model {
     }
 
     public int getYear() {
-        return year;
+        return this.year;
     }
 
     public void setYear(int year) {
         this.year = year;
     }
+
+    public void setIntro(String intro) { this.intro = intro; }
+
+    public String getIntro() { return this.intro; }
 
     public String getDateCreated() {
         return dateCreated;

@@ -4,7 +4,8 @@
 
 # Home page
 
-GET     /                                   controllers.Application.home()
+GET     /                                   controllers.Library.dashboard()
+GET     /huarang                            controllers.Application.home()
 GET     /login                              controllers.Application.login()
 POST    /login                              controllers.Application.authenticate()
 POST    /add                                controllers.Application.createUser()
@@ -13,6 +14,10 @@ GET     /logout                             controllers.Application.logout()
 # Library pages
 
 GET     /dashboard                          controllers.Library.dashboard()
+GET     /gamebook/:id                       controllers.Library.displayGamebook(id: Integer)
+GET     /gamebook/:id/start                 controllers.Library.startGame(id: Integer, replay: Boolean)
+GET     /gamebook/:id/display/:number       controllers.Library.displayEpisode(id: Integer, number: Integer)
+GET     /gamebook/:id/generate/:number      controllers.Library.generateEpisode(id: Integer, number: Integer)
 
 # Admin pages
 

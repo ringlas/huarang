@@ -3,10 +3,50 @@
 @admin(".:: Хуаранг и Кумихо ::.") {
 
     <script>
+
+        function replaceRange(s, start, end, substitute) {
+            return s.substring(0, start) + substitute + s.substring(end);
+        }
+
+        function isNumeric(num){
+            return !isNaN(num)
+        }
+
+
         $(function() {
             $("textarea").htmlarea({
-                toolbar: ["html", "|",
-                    "bold", "italic", "underline", "|", "link", "unlink"] // Overrides/Specifies the Toolbar buttons to show
+                toolbar: [
+                    ["html"],
+                    ["bold", "italic", "underline"],
+                    [
+                        {
+                            css: 'hashtagbtn',
+
+                            'text': 'Toggle hashtags',
+
+                            'action' : function (btn) {
+                                // 'this' = jHtmlArea object
+                                // 'btn' = jQuery object that represents the <a> ("anchor") tag for the toolbar button
+
+                                // Take some action or do something here
+
+                                if( isNumeric(this.getSelectedHTML()) ) {
+                                    str = this.toHtmlString();
+
+                                    str = str.replace(this.getSelectedHTML(), "###" + this.getSelectedHTML() + "###");
+
+                                    this.html(str);
+
+                                    this.updateTextArea();
+                                }
+                                else {
+                                    alert("Невалидна стойност! Трябва да изберете число!");
+                                }
+                            }
+                        }
+                    ]
+                    /* ["bold", "italic", "underline", "|", "link", "unlink", "|"] */
+                ]
             });
         });
     </script>

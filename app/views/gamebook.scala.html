@@ -1,0 +1,61 @@
+@(gamebook_id: Integer)(number: Integer)
+
+@layout(".:: Хуаранг и Кумихо ::.") {
+
+<script type="text/javascript">
+
+            $.ajax({
+              dataType: "json",
+              url: '@routes.Library.generateEpisode(gamebook_id, number)',
+              data: 1,
+              success: function(response){
+                jsonData = response;
+                displayEpisode(jsonData);
+              }
+            });
+
+            function replaceAll(find, replace, str) {
+                return str.replace(new RegExp(find, 'g'), replace);
+            }
+
+            function displayEpisode(data){
+
+                data.text = fixLinks(data.text);
+
+                $('.episode').html('<h1 class="episode-title text-center"> .: Епизод ' + @number + ' :. </h1>' + data.text);
+            }
+
+            function fixLinks(paragraph) {
+
+                re = new RegExp(/###(\d+)###/g);
+
+                paragraph = paragraph.replace(re, replacer);
+
+                return paragraph;
+            }
+
+            function replacer(match, p1, offset, string){
+
+                str = "<a href='/gamebook/" + @gamebook_id + "/display/" + p1 + "' class='go-to-section'>" + p1 + "</a>";
+
+                return str;
+            }
+
+
+</script>
+
+
+    <div class="bird2"></div>
+
+    <div class="row">
+
+        <div class="col-md-12 episode">
+
+        </div>
+    </div>
+</div>
+<div class="footer-logo"></div>
+
+
+}
+

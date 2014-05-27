@@ -1,6 +1,6 @@
-@(message: String)
+@(message: String)(gamebooks: List[Gamebook])
 
-@huarang.main(".:: Хуаранг и Кумихо ::.") {
+@layout(".:: Хуаранг и Кумихо ::.") {
 
     <div class="row">
 
@@ -17,13 +17,15 @@
 
         <div class="col-md-12">
 
-            <h1>Потребителска страница с книги-игри</h1>
+            <h3>Списък с книги-игри:</h3>
 
-            <p>Списък с книги-игри:</p>
+            <ul style="list-style-type: decimal;">
+                <li>Хуаранг и Кумихо (2011) от Радослав: <a href="@routes.Application.home()" class="btn btn-info">Играй</a></li>
 
-            <ul style="list-style:none;">
-                <li><a href="@routes.Application.home()">Хуаранг и Кумихо</a></li>
-                <li><a href="#">Ринглас Мечоносецът</a></li>
+                @for(gamebook <- gamebooks) {
+
+                <li>@gamebook.getTitle() (@gamebook.getYear()) от @gamebook.getAuthor: <a href="@controllers.routes.Library.displayGamebook(gamebook.getId())" class="btn btn-info">Играй</a></li>
+                }
             </ul>
 
         </div>
