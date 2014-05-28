@@ -1,4 +1,4 @@
-@(gamebook_id: Integer)(number: Integer)
+@(gamebook_id: Integer)(number: Integer)(characterSheet: CharacterSheet)
 
 @layout(".:: Хуаранг и Кумихо ::.") {
 
@@ -44,8 +44,53 @@
 
 </script>
 
+<script>
+        $(function() {
+            $("#notes, #codewords").each(function(){
+                $(this).htmlarea({
+                    toolbar: [
+                        ["html"],
+                        ["bold", "italic", "underline"], /* ["bold", "italic", "underline", "|", "link", "unlink", "|"] */
+                    ]
+                });
+            });
+        });
+</script>
 
-    <div class="bird2"></div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h3>Дневник на приключението:</h3>
+
+            <form action="@routes.Library.updateCharSheet(gamebook_id, number)" method="post" role="form">
+
+                <div class="form-group">
+                    <input type="hidden" name="id" value="@characterSheet.getId()">
+                    <label for="notes">Бележки:</label>
+                    <textarea id="notes" class="form-control" name="notes" rows="3">
+                        @characterSheet.getNotes()
+                    </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="codewords">Кодови думи:</label>
+                    <textarea id="codewords" class="form-control" name="codewords" rows="3">
+                        @characterSheet.getCodewords()
+                    </textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" name="submit" class="btn btn-primary">Запази</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
 
     <div class="row">
 

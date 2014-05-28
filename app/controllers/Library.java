@@ -3,6 +3,7 @@ package controllers;
 import models.CharacterSheet;
 import models.Episode;
 import models.Gamebook;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.*;
@@ -31,7 +32,15 @@ public class Library extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result displayEpisode(int gamebook_id, int number) {
 
-        return ok(gamebook.render(gamebook_id, number));
+        CharacterSheet characterSheet = CharacterSheet.find.where()
+                .eq("user_id", Integer.parseInt(session().get("user_id")))
+                .eq("gamebook_id", gamebook_id)
+                .findUnique();
+
+        characterSheet.setCurrentEpisode(number);
+        characterSheet.update();
+
+        return ok(gamebook.render(gamebook_id, number, characterSheet));
     }
 
     @Security.Authenticated(Secured.class)
@@ -62,8 +71,30 @@ public class Library extends Controller {
             return ok(game.render(gamebook));
         }
         else {
-            flash("danger", "Няма намерена такава книга-игра!");
+            flash("error", "Няма намерена такава книга-игра!");
             return redirect(routes.Library.dashboard());
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result updateCharSheet(int gamebook_id, int number) {
+
+        try {
+
+            CharacterSheet characterSheet = Form.form(CharacterSheet.class).bindFromRequest().get();
+
+            // Set the User related to that character sheet
+            characterSheet.setUser(Integer.parseInt(session().get("user_id")));
+            characterSheet.setGamebook(gamebook_id);
+            characterSheet.update();
+
+            flash("success", "Дневникът ви беше обновен!");
+            return redirect(routes.Library.displayEpisode(gamebook_id, number));
+
+        }catch (Exception e) {
+
+            flash("error", "Възникна грешка! Моля, опитайте пак.");
+            return redirect(routes.Library.displayEpisode(gamebook_id, number));
         }
     }
 
@@ -85,15 +116,17 @@ public class Library extends Controller {
                 characterSheetOld.delete();
             }
 
+            Date currentDate = new Date();
+
             CharacterSheet characterSheet = new CharacterSheet();
             characterSheet.setCurrentEpisode(1);
             characterSheet.setGamebook(id);
-            characterSheet.setDateCreated((new Date().toString()));
+            characterSheet.setDateCreated(currentDate.toString());
             characterSheet.setCodewords("");
             characterSheet.setNotes("");
             characterSheet.setUser(Integer.parseInt(session().get("user_id")));
 
-            //characterSheet.save();
+            characterSheet.save();
 
             return redirect(routes.Library.displayEpisode(id, 1));
         }
@@ -101,11 +134,11 @@ public class Library extends Controller {
         else {
 
             if(characterSheetOld != null) {
-                return redirect(routes.Library.displayEpisode(id, 1));
+                return redirect(routes.Library.displayEpisode(id, characterSheetOld.getCurrentEpisode()));
             }
             else {
-                flash("danger", "Няма намерен дневник за тази книга-игра!");
-                return redirect(routes.Library.dashboard());
+                flash("error", "Няма намерен дневник за тази книга-игра!");
+                return redirect(routes.Library.displayGamebook(id));
             }
         }
     }

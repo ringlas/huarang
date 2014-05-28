@@ -16,8 +16,9 @@ GET     /logout                             controllers.Application.logout()
 GET     /dashboard                          controllers.Library.dashboard()
 GET     /gamebook/:id                       controllers.Library.displayGamebook(id: Integer)
 GET     /gamebook/:id/start                 controllers.Library.startGame(id: Integer, replay: Boolean)
-GET     /gamebook/:id/display/:number       controllers.Library.displayEpisode(id: Integer, number: Integer)
 GET     /gamebook/:id/generate/:number      controllers.Library.generateEpisode(id: Integer, number: Integer)
+GET     /gamebook/:id/display/:number       controllers.Library.displayEpisode(id: Integer, number: Integer)
+POST    /gamebook/:id/display/:number       controllers.Library.updateCharSheet(id: Integer, number: Integer)
 
 # Admin pages
 
@@ -33,6 +34,12 @@ GET     /admin/add/episode/:gamebook_id     controllers.admin.Admin.createEpisod
 POST    /admin/add/episode                  controllers.admin.Admin.saveEpisode()
 POST    /admin/delete/episode/:id           controllers.admin.Admin.deleteEpisode(id: Integer)
 GET     /admin/edit/episode/:id             controllers.admin.Admin.editEpisode(id: Integer)
+
+GET     /admin/list/users                   controllers.admin.Admin.listUsers()
+GET     /admin/user/:id                     controllers.admin.Admin.viewUser(id: Integer)
+GET     /admin/add/user                     controllers.admin.Admin.createUser()
+POST    /admin/add/user                     controllers.admin.Admin.saveUser()
+POST    /admin/delete/user/:id              controllers.admin.Admin.deleteUser(id: Integer)
 
 # Gamebook pages
 

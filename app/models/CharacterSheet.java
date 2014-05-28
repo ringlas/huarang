@@ -19,11 +19,11 @@ public class CharacterSheet extends Model {
     private String dateCreated;
 
     @Lob
-    @Column(name="text", length = 512)
+    @Column(name="codewords", length = 512)
     private String codewords;
 
     @Lob
-    @Column(name="text", length = 512)
+    @Column(name="notes", length = 512)
     private String notes;
 
     @ManyToOne

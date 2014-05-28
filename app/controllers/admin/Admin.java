@@ -5,6 +5,7 @@ import models.*;
 import models.Gamebook;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Crypto;
 import play.mvc.Controller;
 import play.mvc.*;
 import java.util.Date;
@@ -197,6 +198,72 @@ public class Admin extends Controller {
         else {
             flash("error", "Не съществува запис такова id.");
             return redirect(routes.Admin.listGamebooks());
+        }
+    }
+
+    /************************* USER LOGIC *****************************/
+
+    @Security.Authenticated(Secured.class)
+    public static Result listUsers() {
+
+        List<User> users = User.find.all();
+
+        return ok(listusers.render("List all users page!", users));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result viewUser(int id) {
+
+        User user = User.find.byId(id);
+        return ok(viewuser.render("View user details page!", user));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result createUser() {
+
+        return ok(adduser.render("Add user page!"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result saveUser() {
+
+        Form<User> userForm = Form.form(User.class).bindFromRequest();
+
+        if(userForm.hasErrors()){
+
+            flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
+            return redirect(routes.Admin.createUser());
+        }
+
+        User user = userForm.get();
+
+        // Encrypt the user password with SHA-1 algorithm and Application SALT
+        user.setPassword(Crypto.sign(user.getPassword()));
+        // Save the user
+        user.save();
+
+        flash("success", "Успешно създадохте нов потребител.");
+        return redirect(routes.Admin.listUsers());
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteUser(int user_id) {
+        User user = User.find.byId(user_id);
+
+        if(user != null) {
+            try {
+                user.delete();
+                flash("success", "Успешно изтрихте записа от базата данни.");
+                return redirect(routes.Admin.listUsers());
+
+            } catch (Exception e) {
+                flash("error", "Възникна грешка. Моля, опитайте отново.");
+                return redirect(routes.Admin.listUsers());
+            }
+        }
+        else {
+            flash("error", "Не съществува запис такова id.");
+            return redirect(routes.Admin.listUsers());
         }
     }
 }

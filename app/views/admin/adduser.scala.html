@@ -1,0 +1,52 @@
+@(message: String)
+
+@admin(".:: Хуаранг и Кумихо ::.") {
+
+    <div class="row">
+
+        <div class="clear"></div>
+
+        <div class="col-md-12">
+
+            <h2>Създаване на потребител</h2>
+
+            <form action="@controllers.admin.routes.Admin.saveUser()" method="post" role="form">
+
+                <div class="form-group">
+                    <label for="username">Въведете потребителско име:</label>
+                    <input id="username" class="form-control" type="text" name="username" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Въведете парола:</label>
+                    <input id="password" class="form-control" type="password" name="password" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Повторете въведената парола:</label>
+                    <input id="confirm_password" class="form-control" type="password" name="confirm_password" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Изберете роля:</label>
+                    <select id="role" name="role" class="form-control">
+                        <option value="public" selected>Публичен</option>
+                        <option value="admin">Администратор</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Запази</button>
+
+                <a href="@controllers.admin.routes.Admin.listUsers()" class="btn btn-default">Затвори</a>
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+}
+
+

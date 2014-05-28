@@ -1,0 +1,40 @@
+@(message: String)(user: User)
+
+@admin(".:: Хуаранг и Кумихо ::.") {
+
+    <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+
+    </script>
+
+    <div class="row">
+
+        <div class="clear"></div>
+
+        <div class="col-md-12">
+
+            <h2>Преглед на потребител</h2>
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td> <strong>Потребителско име:</strong> </td>
+                        <td> @user.getUsername() </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Роля:</strong> </td>
+                        <td> <span class="label label-info">@user.getRole()</span> </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="@controllers.admin.routes.Admin.listUsers()" class="btn btn-default">Затвори</a>
+
+        </div>
+    </div>
+
+}
+
+
