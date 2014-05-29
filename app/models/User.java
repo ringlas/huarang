@@ -27,11 +27,12 @@ public class User extends Model {
     private String username;
 
     @Column(name="password", length = 255)
-    @Constraints.Required
     private String password;
 
     @Column(name="role", length = 255)
     private String role;
+
+    public void setId(int id) { this.id = id; }
 
     public int getId(){
         return this.id;

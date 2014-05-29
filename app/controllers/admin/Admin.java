@@ -225,25 +225,47 @@ public class Admin extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    public static Result editUser(int id) {
+
+        User user = User.find.byId(id);
+
+        return ok(edituser.render("Edit user page!", user));
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result saveUser() {
 
         Form<User> userForm = Form.form(User.class).bindFromRequest();
-
-        if(userForm.hasErrors()){
-
-            flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
-            return redirect(routes.Admin.createUser());
-        }
+        DynamicForm requestData = Form.form().bindFromRequest();
 
         User user = userForm.get();
+        int userId = user.getId();
+        String password = user.getPassword();
 
-        // Encrypt the user password with SHA-1 algorithm and Application SALT
-        user.setPassword(Crypto.sign(user.getPassword()));
-        // Save the user
-        user.save();
+        if(password != null && !password.isEmpty()) {
+            String confirmPassword = requestData.get("confirm_password");
+            if(!password.equals(confirmPassword)) {
+                flash("error", "Паролите не съвпадат!");
+                return redirect(routes.Admin.listUsers());
+            }
+            else {
+                // Encrypt the user password with SHA-1 algorithm and Application SALT
+                user.setPassword(Crypto.sign(user.getPassword()));
+            }
+        }
 
-        flash("success", "Успешно създадохте нов потребител.");
-        return redirect(routes.Admin.listUsers());
+        if(userId != 0) {
+            // Update the user
+            user.update();
+            flash("success", "Успешни промени!");
+            return redirect(routes.Admin.editUser(userId));
+
+        } else {
+            // Save the user
+            user.save();
+            flash("success", "Успешни промени!");
+            return redirect(routes.Admin.listUsers());
+        }
     }
 
     @Security.Authenticated(Secured.class)

@@ -54,6 +54,9 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">@session.get("username") <b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                @if(session.get("role").equals("admin")) {
+                                <li><a href="@controllers.admin.routes.Admin.dashboard()">Админ панел</a></li>
+                                }
                                 <li><a href="@routes.Application.logout()">Изход</a></li>
                             </ul>
                         </li>

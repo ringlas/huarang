@@ -38,6 +38,7 @@ GET     /admin/edit/episode/:id             controllers.admin.Admin.editEpisode(
 GET     /admin/list/users                   controllers.admin.Admin.listUsers()
 GET     /admin/user/:id                     controllers.admin.Admin.viewUser(id: Integer)
 GET     /admin/add/user                     controllers.admin.Admin.createUser()
+GET     /admin/edit/user/:id                controllers.admin.Admin.editUser(id: Integer)
 POST    /admin/add/user                     controllers.admin.Admin.saveUser()
 POST    /admin/delete/user/:id              controllers.admin.Admin.deleteUser(id: Integer)
 
