@@ -42,6 +42,10 @@ GET     /admin/edit/user/:id                controllers.admin.Admin.editUser(id:
 POST    /admin/add/user                     controllers.admin.Admin.saveUser()
 POST    /admin/delete/user/:id              controllers.admin.Admin.deleteUser(id: Integer)
 
+GET     /admin/list/tests                   controllers.admin.Admin.listTests()
+GET     /admin/add/test                     controllers.admin.Admin.createTest()
+POST    /admin/add/test                     controllers.admin.Admin.saveTest()
+
 # Gamebook pages
 
 GET     /skills                             controllers.GamebookController.chooseSkill()

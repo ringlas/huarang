@@ -288,4 +288,60 @@ public class Admin extends Controller {
             return redirect(routes.Admin.listUsers());
         }
     }
+
+    /************************* TEST LOGIC *****************************/
+
+    @Security.Authenticated(Secured.class)
+    public static Result listTests() {
+
+        List<Test> tests = Test.find.all();
+
+        return ok(listtests.render("List all tests page!", tests));
+    }
+
+//    @Security.Authenticated(Secured.class)
+//    public static Result viewUser(int id) {
+//
+//        User user = User.find.byId(id);
+//        return ok(viewuser.render("View user details page!", user));
+//    }
+//
+    @Security.Authenticated(Secured.class)
+    public static Result createTest() {
+
+        List<Gamebook> gamebooks = Gamebook.find.all();
+
+        return ok(addtest.render("Add test page!", gamebooks));
+    }
+//
+//    @Security.Authenticated(Secured.class)
+//    public static Result editUser(int id) {
+//
+//        User user = User.find.byId(id);
+//
+//        return ok(edituser.render("Edit user page!", user));
+//    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result saveTest() {
+
+        Form<Test> testForm = Form.form(Test.class).bindFromRequest();
+
+        Test test = testForm.get();
+        int testId = test.getId();
+
+        if(testId != 0) {
+            // Update the user
+            test.update();
+            flash("success", "Успешни промени!");
+//            return redirect(routes.Admin.editTest(testId));
+            return redirect(routes.Admin.listTests());
+
+        } else {
+            // Save the user
+            test.save();
+            flash("success", "Успешни промени!");
+            return redirect(routes.Admin.listTests());
+        }
+    }
 }

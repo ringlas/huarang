@@ -1,0 +1,47 @@
+@(title: String)(tests: List[Test])
+
+@admin(".:: Хуаранг и Кумихо ::.") {
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h2>Списък с тестовете</h2>
+
+            <a href="@controllers.admin.routes.Admin.createTest()" class="btn btn-success">Създай нов тест</a>
+
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th>Потребител</th>
+                        <th>Роля</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                @for(test <- tests) {
+                    <tr>
+                        <td>@test.getTitle()</td>
+                        <td><span class="label label-info">@test.getGamebook()</span></td>
+                        <td>
+                            <form method="post" action="@controllers.admin.routes.Admin.deleteUser(test.getId())">
+                                <a href="@controllers.admin.routes.Admin.viewUser(test.getId())" class="btn btn-info">Прегледай</a>
+                                <a href="@controllers.admin.routes.Admin.editUser(test.getId())" class="btn btn-warning">Редактирай</a>
+                                <button type="submit" class="btn btn-danger">Изтрий</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+
+
+}
+
+

@@ -58,6 +58,25 @@ create table gamebook (
   constraint pk_gamebook primary key (id))
 ;
 
+create table question (
+  id                        integer auto_increment not null,
+  question                  varchar(255),
+  answer_a                  varchar(255),
+  answer_b                  varchar(255),
+  answer_c                  varchar(255),
+  answer_d                  varchar(255),
+  correct_answer            integer,
+  test_id                   integer,
+  constraint pk_question primary key (id))
+;
+
+create table test (
+  id                        integer auto_increment not null,
+  title                     varchar(255),
+  gamebook_id               integer,
+  constraint pk_test primary key (id))
+;
+
 create table user (
   id                        integer auto_increment not null,
   username                  varchar(255),
@@ -80,6 +99,10 @@ alter table episode_link add constraint fk_episode_link_goToEpisode_6 foreign ke
 create index ix_episode_link_goToEpisode_6 on episode_link (go_to_episode_id);
 alter table gamebook add constraint fk_gamebook_user_7 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_gamebook_user_7 on gamebook (user_id);
+alter table question add constraint fk_question_test_8 foreign key (test_id) references test (id) on delete restrict on update restrict;
+create index ix_question_test_8 on question (test_id);
+alter table test add constraint fk_test_gamebook_9 foreign key (gamebook_id) references gamebook (id) on delete restrict on update restrict;
+create index ix_test_gamebook_9 on test (gamebook_id);
 
 
 
@@ -96,6 +119,10 @@ drop table episode;
 drop table episode_link;
 
 drop table gamebook;
+
+drop table question;
+
+drop table test;
 
 drop table user;
 
