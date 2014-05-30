@@ -1,0 +1,51 @@
+body
+{
+    padding: 0 auto;
+    margin: 0 auto;
+    font-family: Arial,Helvetica,sans-serif;
+    height:100%;
+    width: 100%;
+    background: url('../images/login-bg.jpg') no-repeat center center fixed;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: #ffffff;
+    font-size: 14px;
+    position: relative;
+}
+
+h1, h3{
+    font-family: 'Marck Script', cursive;
+}
+
+h1{
+ font-size: 44px;
+}
+
+h3{
+    font-size: 28px;
+}
+
+.form-control:focus {
+  border-color: #00b700;
+}
+
+#logo{
+    background: url('../images/logo-site.png');
+    width: 58px;
+    height: 64px;
+
+}
+
+.logo-row{
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.logo-row p{
+    font-family: Arial;
+    font-size: 16px;
+    color: #abb9c3;
+}
+
