@@ -1,7 +1,6 @@
 @(message: String)(gamebooks: List[Gamebook])
 
 @layout(".:: Хуаранг и Кумихо ::.") {
-
     <div class="row">
 
         <div class="clear"></div>
@@ -10,12 +9,32 @@
 
             <h3>Списък с книги-игри:</h3>
 
-            <ul style="list-style-type: decimal;">
-                <li>Хуаранг и Кумихо (2011) от Радослав: <a href="@routes.Application.home()" class="btn btn-info">Играй</a></li>
+            <ul class="book-list">
+
+                <li>
+
+                    <div class="book-cover huarang-cover">
+
+                    </div>
+
+                    <div class="book-title">
+                        Хуаранг и Кумихо
+                    </div>
+
+                    <div class="book-author">
+                        Радослав
+                    </div>
+
+                    <div class="play-btn">
+                        <a href="@routes.Application.home()" class="btn btn-warning">Играй</a>
+                    </div>
+
+
+                </li>
 
                 @for(gamebook <- gamebooks) {
 
-                <li>@gamebook.getTitle() (@gamebook.getYear()) от @gamebook.getAuthor: <a href="@controllers.routes.Library.displayGamebook(gamebook.getId())" class="btn btn-info">Играй</a></li>
+                <li>@gamebook.getTitle() (@gamebook.getYear()) от @gamebook.getAuthor: <a href="@controllers.routes.Library.displayGamebook(gamebook.getId())" class="btn btn-warning">Играй</a></li>
                 }
             </ul>
 

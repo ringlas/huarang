@@ -13,6 +13,9 @@ html {
 body {
   margin: 0;
 }
+a:focus{
+    outline: none;
+}
 article,
 aside,
 details,
