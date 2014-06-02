@@ -9,6 +9,7 @@ import play.libs.Crypto;
 import play.mvc.Controller;
 import play.mvc.*;
 import java.util.Date;
+import java.util.Map;
 import java.util.List;
 
 import scala.util.parsing.combinator.testing.Str;
@@ -353,5 +354,36 @@ public class Admin extends Controller {
             flash("success", "Успешни промени!");
             return redirect(routes.Admin.listTests());
         }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result importGamebook() {
+        return ok(importbook.render("lqllq!"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result saveImportGamebook() {
+    final Map<String, String[]> values = request().body().asFormUrlEncoded();
+		return ok(values.get("title"));
+/*
+
+		String[] eps = episodesString.split("!#$");
+
+    	Gamebook book = new Gamebook();
+    	book.setTitle( title );
+    	book.setAuthor( "Set Author..." );
+    	book.setYear( 1900 );
+    	book.setUser( Integer.parseInt( session().get("user_id") ) );
+    	book.save();
+
+		for( int i = 0; i < eps.length; i++ ) {
+			Episode ep = new Episode();
+			ep.setText( eps[i] );
+			ep.setGamebook( book.getId() );
+			ep.save();
+		}
+
+    	return ok("Няма резултати в базата данни!");
+    	*/
     }
 }

@@ -1,24 +1,28 @@
-<!DOCTYPE html>
-<html lang="us">
-<head>
+@(message: String)
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@bookimport(".:: Хуаранг и Кумихо ::.") {
 
-    <title>Книги Игри - Импортиране</title>
+        <script>
+            function saveBook() {
+                $.ajax({
+                    type :  "POST",
+                    dataType: 'json',
+                    data: JSON.stringify( { title: 'Some Title', episodesString: 'aaaaaaaaa!#$bbbbbbbb!#$ccccccccc' } ),
+                    url  :  "@controllers.admin.routes.Admin.saveImportGamebook()",
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            }
+        </script>
 
-    <link href="css/theme.css" rel="stylesheet">
-    <script src="js/jquery-1.10.2.js"></script>
-
-    <script src="js/index.js"></script>
-</head>
-<body class="unselectable">
 <form id = 'fileForm' >
     <div class="input-container">
         <input type="file" name="fileToUpload" id="fileField" class="hidden-input" onchange="fileSelected();"/>
 
         <div class="" id="fileInputLabel">Няма избран файл.</div>
-        <div class="menu-btn fake-btn" onclick="triggerInputField('fileField');">Browse</div>
+        <div class="fake-btn btn btn-primary" onclick="triggerInputField('fileField');">Browse</div>
+        <div class="fake-btn btn btn-primary" onclick="saveBook();">Save</div>
     </div>
 </form>
 <div class="centeredContainer">
@@ -39,5 +43,5 @@
     <div class="menu-btn btn icon-ellipsis"></div>
     <div class="menu-btn btn icon-cancel-circled"></div>
 </div>
-</body>
-</html>
+
+}
