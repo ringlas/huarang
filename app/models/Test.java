@@ -1,5 +1,6 @@
 package models;
 
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class Test extends Model {
     private int id;
 
     @Column(name="title", length = 255)
+    @Constraints.Required
     private String title;
 
     @ManyToOne

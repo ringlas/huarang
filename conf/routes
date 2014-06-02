@@ -13,7 +13,6 @@ GET     /logout                             controllers.Application.logout()
 
 # Library pages
 
-GET     /dashboard                          controllers.Library.dashboard()
 GET     /gamebook/:id                       controllers.Library.displayGamebook(id: Integer)
 GET     /gamebook/:id/start                 controllers.Library.startGame(id: Integer, replay: Boolean)
 GET     /gamebook/:id/generate/:number      controllers.Library.generateEpisode(id: Integer, number: Integer)

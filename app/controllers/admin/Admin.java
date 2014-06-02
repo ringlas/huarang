@@ -327,10 +327,20 @@ public class Admin extends Controller {
 
         Form<Test> testForm = Form.form(Test.class).bindFromRequest();
 
-        Test test = testForm.get();
-        int testId = test.getId();
 
-        if(testId != 0) {
+
+        if(testForm.hasErrors()){
+
+            flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
+            return redirect(routes.Admin.createTest());
+        }
+
+        int gamebook_id = Integer.parseInt(testForm.data().get("gamebook_id"));
+
+        Test test = testForm.get();
+        test.setGamebook(gamebook_id);
+
+        if(test.getId() != 0) {
             // Update the user
             test.update();
             flash("success", "Успешни промени!");
