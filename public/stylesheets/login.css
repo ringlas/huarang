@@ -15,6 +15,10 @@ body
     position: relative;
 }
 
+a:focus{
+    outline: none;
+}
+
 h1, h3{
     font-family: 'Marck Script', cursive;
 }
@@ -29,23 +33,5 @@ h3{
 
 .form-control:focus {
   border-color: #00b700;
-}
-
-#logo{
-    background: url('../images/logo-site.png');
-    width: 58px;
-    height: 64px;
-
-}
-
-.logo-row{
-    margin-top: 20px;
-    margin-bottom: 50px;
-}
-
-.logo-row p{
-    font-family: Arial;
-    font-size: 16px;
-    color: #abb9c3;
 }
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="us">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Книги Игри - Импортиране</title>
+
+    <link href="css/theme.css" rel="stylesheet">
+    <script src="js/jquery-1.10.2.js"></script>
+
+    <script src="js/index.js"></script>
+</head>
+<body>
+<form id = 'fileForm'>
+    <div class="input-container">
+        <input type="file" name="fileToUpload" id="fileField" class="hidden-input" onchange="fileSelected();"/>
+
+        <div class="menu-btn fake-btn" onclick="triggerInputField('fileField');">Browse</div>
+    </div>
+</form>
+<div class="centeredContainer">
+    <div class="navigation floatLeft" id="sideMenu">
+        <div class="menu-btn btn icon-link"></div>
+        <div class="menu-btn btn icon-unlink"></div>
+        <div class="menu-btn btn icon-ellipsis"></div>
+        <div class="menu-btn btn icon-cancel-circled"></div>
+    </div>
+    <div id="textContainer" class="textContainer">
+        Няма налични данни.
+    </div>
+    <div style="clear:both;"></div>
+</div>
+<div class="floatingMenu unselectable" id="floatingMenu" >
+    <div class="menu-btn btn icon-link"></div>
+    <div class="menu-btn btn icon-unlink"></div>
+    <div class="menu-btn btn icon-ellipsis"></div>
+    <div class="menu-btn btn icon-cancel-circled"></div>
+</div>
+</body>
+</html>

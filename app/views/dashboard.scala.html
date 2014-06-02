@@ -1,21 +1,64 @@
 @(message: String)(gamebooks: List[Gamebook])
 
-@layout(".:: Хуаранг и Кумихо ::.") {
 
+@layout(".:: Хуаранг и Кумихо ::.") {
     <div class="row">
 
         <div class="clear"></div>
 
         <div class="col-md-12">
 
-            <h3>Списък с книги-игри:</h3>
+            <h2>Списък с книги-игри:</h2>
 
-            <ul style="list-style-type: decimal;">
-                <li>Хуаранг и Кумихо (2011) от Радослав: <a href="@routes.Application.home()" class="btn btn-info">Играй</a></li>
+            <ul class="book-list">
+
+                <li>
+
+                    <div class="book-cover huarang-cover">
+
+                    </div>
+
+                    <div class="book-title">
+                        Хуаранг и Кумихо
+                    </div>
+
+                    <div class="book-year">
+                       2011
+                    </div>
+
+                    <div class="book-author">
+                        от Лейдрин Суийвър
+                    </div>
+
+                    <div class="play-btn">
+                        <a href="@routes.Application.home()" class="btn btn-success">Играй</a>
+                    </div>
+
+
+                </li>
 
                 @for(gamebook <- gamebooks) {
 
-                <li>@gamebook.getTitle() (@gamebook.getYear()) от @gamebook.getAuthor: <a href="@controllers.routes.Library.displayGamebook(gamebook.getId())" class="btn btn-info">Играй</a></li>
+                <li>
+                    <div class="book-cover">
+
+                    </div>
+
+                    <div class="book-title">
+                        @gamebook.getTitle()
+                    </div>
+
+                    <div class="book-year">
+                        (@gamebook.getYear())
+                    </div>
+
+                    <div class="book-author">
+                    от @gamebook.getAuthor
+                    </div>
+
+                    <div class="play-btn">
+                        <a href="@controllers.routes.Library.displayGamebook(gamebook.getId())" class="btn btn-warning">Играй</a></li>
+                    </div>
                 }
             </ul>
 

@@ -7,9 +7,11 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
         <!-- CSS -->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link href='http://fonts.googleapis.com/css?family=Marck+Script&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap-theme.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/jHtmlArea.css")">
         <!--<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/mediaQueries.css")">-->
 
@@ -31,58 +33,64 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="@controllers.routes.Library.dashboard()">Книги-игри Библиотека</a>
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+                <div class="row">
+                    <div class="col-md-12">
+                         <nav class="navbar navbar-default dashboard-menu" role="navigation">
+                            <div class="container-fluid dashboard-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a class="navbar-brand" href="@controllers.routes.Library.dashboard()">Онлайн библиотека<br>за книги-игри</a>
+                                </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    @if(session.get("username") != null) {
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a href="@controllers.routes.Library.dashboard()">Начало</a></li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@session.get("username") <b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                @if(session.get("role").equals("admin")) {
+                                                <li><a href="@controllers.admin.routes.Admin.dashboard()">Админ панел</a></li>
+                                                }
+                                                <li><a href="@routes.Application.logout()">Изход</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    }
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
                 </div>
+            </div>
+        </div>
+        <!-- END OF HEADER -->
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="@controllers.routes.Library.dashboard()">Начало</a></li>
-                    </ul>
-
-                    @if(session.get("username") != null) {
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@session.get("username") <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                @if(session.get("role").equals("admin")) {
-                                <li><a href="@controllers.admin.routes.Admin.dashboard()">Админ панел</a></li>
-                                }
-                                <li><a href="@routes.Application.logout()">Изход</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    }
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-
-        <div class="container">
-
+    <div class="panel panel-default">
+        <div class="panel-body">
             <h1>Добре дошли!</h1>
 
             <div class="cold-md-12">
                 @if(flash.contains("success")) {
-                <div class="alert alert-success">@flash.get("success")</div>
+                    <div class="alert alert-success">@flash.get("success")</div>
                 }
                 @if(flash.contains("error")) {
-                <div class="alert alert-danger">@flash.get("error")</div>
+                    <div class="alert alert-danger">@flash.get("error")</div>
                 }
             </div>
 
+
             @content
-
         </div>
-
-    </body>
+    </div>
+</body>
 </html>
