@@ -364,10 +364,9 @@ public class Admin extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result saveImportGamebook() {
     final Map<String, String[]> values = request().body().asFormUrlEncoded();
-		return ok(values.get("title"));
-/*
 
-		String[] eps = episodesString.split("!#$");
+		String[] eps = values.get("episodes")[0].split(",,,");
+		String title = values.get("title")[0];
 
     	Gamebook book = new Gamebook();
     	book.setTitle( title );
@@ -380,10 +379,10 @@ public class Admin extends Controller {
 			Episode ep = new Episode();
 			ep.setText( eps[i] );
 			ep.setGamebook( book.getId() );
+			ep.setNumber( i + 1 );
 			ep.save();
 		}
 
     	return ok("Няма резултати в базата данни!");
-    	*/
     }
 }
