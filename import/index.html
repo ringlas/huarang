@@ -12,11 +12,12 @@
 
     <script src="js/index.js"></script>
 </head>
-<body>
-<form id = 'fileForm'>
+<body class="unselectable">
+<form id = 'fileForm' >
     <div class="input-container">
         <input type="file" name="fileToUpload" id="fileField" class="hidden-input" onchange="fileSelected();"/>
 
+        <div class="" id="fileInputLabel">Няма избран файл.</div>
         <div class="menu-btn fake-btn" onclick="triggerInputField('fileField');">Browse</div>
     </div>
 </form>
@@ -27,12 +28,12 @@
         <div class="menu-btn btn icon-ellipsis"></div>
         <div class="menu-btn btn icon-cancel-circled"></div>
     </div>
-    <div id="textContainer" class="textContainer">
+    <div id="textContainer" class="textContainer selectable">
         Няма налични данни.
     </div>
     <div style="clear:both;"></div>
 </div>
-<div class="floatingMenu unselectable" id="floatingMenu" >
+<div class="floatingMenu" id="floatingMenu" >
     <div class="menu-btn btn icon-link"></div>
     <div class="menu-btn btn icon-unlink"></div>
     <div class="menu-btn btn icon-ellipsis"></div>

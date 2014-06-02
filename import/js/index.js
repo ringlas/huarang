@@ -34,7 +34,9 @@ function triggerInputField( id ) {
 
 function fileSelected() {
     var file = document.getElementById('fileField').files[0];
+
     if (file) {
+        $('#fileInputLabel').html(file.name);
         var reader = new FileReader();
         reader.onload = function (e) {
             var text = reader.result;
@@ -44,6 +46,9 @@ function fileSelected() {
         }
 
         reader.readAsText(file);
+    }
+    else {
+        $('#fileInputLabel').html('Няма избран файл.');
     }
 }
 

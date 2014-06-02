@@ -20,20 +20,30 @@ body {
     position: relative;
     height: 24px;
 }
-.hidden-input {
+
+#fileInputLabel {
+    cursor: default;
+    position: absolute;
+    display: inline-block;
+    top: 2px;
+    left: 100px;
+    padding: 0 20px 0 24px;
+    height: 24px;
+    line-height: 24px;
 
     color: #7A297A;
     font-weight: bold;
-    position: absolute;
-    top: 0;
-    left: 0;
-
     background-color: #E0C2E0;
-    border:1px solid #E0C2E0;
+    border:1px solid #7A297A;
     border-radius:5px;
 }
 
+.hidden-input {
+    opacity: 0;
+}
+
 .menu-btn.fake-btn {
+    /*border-right: none;*/
     font-weight: bold;
     position: absolute;
     top: 0;
@@ -71,18 +81,18 @@ body {
     margin-top: 20px;
 }
 
-.btn {
+.unselectable {
     -khtml-user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
 }
 
-.unselectable {
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+.selectable {
+    -khtml-user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
 }
 
 .number {
@@ -118,11 +128,7 @@ body {
     border-radius:5px;
     width: 36px;
     height: 36px;
-
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    cursor: pointer;
 }
 
 .navigation .menu-btn {
