@@ -29,6 +29,7 @@ $(document).ready(function () {
 
 function triggerInputField( id ) {
     $('#fileForm').find('#'+id).val('');
+    $('#fileInputLabel').html('Няма избран файл.');
     $('#'+id).trigger('click');
 }
 
@@ -87,9 +88,20 @@ function filterDownArray( map, len ) {
     };
 }
 
+function getBook() {
+//    var title, content;
+//    var text = document.getElementById( 'textContainer').innerHTML;
+//    title = text.split( ''<br>' ')[0];
+//    content = text.replace()
+//    return {
+//        title: title,
+//        content: content
+//    };
+}
+
 function resizeTextArea() {
     $('.textContainer').css({
-        height: window.innerHeight - 172
+        height: window.innerHeight - 285
     });
 }
 
@@ -253,11 +265,14 @@ function targetIsInside( target, element ) {
 
 function toggleButtonState( btn, pressed ){
     if( pressed == true ) {
-        btn.classList.add( 'pressed' );
+        btn.classList.add( 'btn-success' );
+        btn.classList.remove( 'btn-danger' );
     } else if( pressed == false ){
-        btn.classList.remove( 'pressed' );
+        btn.classList.remove( 'btn-success' );
+        btn.classList.add( 'btn-danger' );
     } else {
-        btn.classList.toggle( 'pressed' );
+        btn.classList.toggle( 'btn-success' );
+        btn.classList.toggle( 'btn-danger' );
     }
 }
 
@@ -343,6 +358,8 @@ function textToLink( range ) {
         var div = document.createElement('div');
         div.classList.add('number');
         div.classList.add('btn');
+        div.classList.add('btn-danger');
+        div.addEventListener( 'click', function( e ) { toggleButtonState(e.target); } );
         div.id = 'ep_btn_' + (id++);
         div.innerHTML = range.toString();
 
@@ -356,7 +373,7 @@ function textToLink( range ) {
 //chapter:    <div class="chapter" id="ep_' + number + '">' + number + '</div>
 
 function getLinkString( text ) {
-    return '<div class="number btn" id="ep_btn_' + (id++) + '" onclick="toggleButtonState( this )">' + text + '</div>';
+    return '<div class="number btn-danger btn" id="ep_btn_' + (id++) + '" onclick="toggleButtonState( this )">' + text + '</div>';
 }
 
 function getChapterString( text ) {
@@ -429,7 +446,7 @@ function initFloatingMenu() {
         if( target.classList.contains('number') ) {
             menu.deleteBtn.action = function() { elementToText( target ) };
 
-            if( target.classList.contains('pressed') ) {
+            if( target.classList.contains('btn-success') ) {
                 menu.hideLinkBtn();
                 menu.showUnlinkBtn();
                 menu.showChapterBtn();
