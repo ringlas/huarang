@@ -46,11 +46,30 @@ function fileSelected() {
             resizeTextArea();
         }
 
-        reader.readAsText(file);
+        reader.readAsText(file, '');
     }
     else {
         $('#fileInputLabel').html('Няма избран файл.');
     }
+}
+
+var title
+
+function getBook() {
+    var title, content;
+    var text = document.getElementById( 'textContainer').innerHTML;
+    title = text.split( ''<br>' ')[0];
+    content = text.replace()
+    return {
+        title: title,
+        content: content
+    };
+}
+
+function resizeTextArea() {
+    $('.textContainer').css({
+        height: window.innerHeight - 285
+    });
 }
 
 function filterDownArray( map, len ) {
@@ -88,23 +107,6 @@ function filterDownArray( map, len ) {
     };
 }
 
-function getBook() {
-//    var title, content;
-//    var text = document.getElementById( 'textContainer').innerHTML;
-//    title = text.split( ''<br>' ')[0];
-//    content = text.replace()
-//    return {
-//        title: title,
-//        content: content
-//    };
-}
-
-function resizeTextArea() {
-    $('.textContainer').css({
-        height: window.innerHeight - 285
-    });
-}
-
 function filterUpArray( map, len ) {
     //calculate max offsets
     var maxOffsets = [],
@@ -139,6 +141,24 @@ function filterUpArray( map, len ) {
     };
 }
 
+function trimMapLength( map, len ) {
+    var miss = 5;
+    var realLen = len;
+    for ( var i = 0; i < len; i++) {
+        if( typeof map[i] == 'undefined' ) {
+            miss--;
+
+            if(! miss ) {
+                break;
+            }
+        } else {
+            realLen = i
+        }
+    }
+
+    return realLen
+}
+
 function processText(text) {
     var max = -1;
 
@@ -157,6 +177,10 @@ function processText(text) {
 
         return number;
     });
+
+    //re-calculate the max chapter if there are occurences of big numbers in the book (like year 2013, etc..)
+    var max = trimMapLength( numbersMap, max );
+    console.log( 'Chapters cut down to: ' + max );
 
     //we don't believe that there would be chapter "0", so we neglect it
     delete numbersMap[0];
