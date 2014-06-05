@@ -2,6 +2,20 @@
 
 @admin(".:: Хуаранг и Кумихо ::.") {
 
+<script>
+    $(document).ready(function() {
+
+        // datatable
+
+        $('#tableGamebooks').dataTable();
+
+        $('.dataTables_wrapper input, .dataTables_wrapper select').addClass('form-control').css({'width':'auto','display':'inline'});
+
+        $('.dataTables_wrapper .paginate_button').addClass('btn btn-default');
+
+    });
+</script>
+
     <div class="row">
 
         <div class="col-md-12">
@@ -10,7 +24,7 @@
 
             <a href="@controllers.admin.routes.Admin.createGamebook()" class="btn btn-success">Създай нова книга-игра</a>
 
-            <table class="table table-stripped">
+            <table id="tableGamebooks" class="table table-stripped">
                 <thead>
                     <tr>
                         <th>Заглавие</th>

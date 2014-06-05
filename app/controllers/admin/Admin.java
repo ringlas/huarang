@@ -8,11 +8,17 @@ import play.data.Form;
 import play.libs.Crypto;
 import play.mvc.Controller;
 import play.mvc.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.Map;
 import java.util.List;
+import java.nio.file.Files;
 
 import scala.util.parsing.combinator.testing.Str;
+import scalax.io.support.FileUtils;
 import views.html.admin.*;
 
 /**
@@ -49,12 +55,32 @@ public class Admin extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result saveGamebook() {
+
         Form<Gamebook> gamebookForm = Form.form(Gamebook.class).bindFromRequest();
 
-        if(gamebookForm.hasErrors()){
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart picture = body.getFile("picture");
 
-            flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
-            return redirect(routes.Admin.createGamebook());
+        String pictureName = "";
+
+        if (picture != null) {
+            String fileName = picture.getFilename();
+            String contentType = picture.getContentType();
+
+            if(!contentType.equals("image/png")){
+                flash("error", "Невалидно разширение на файл!");
+                return redirect(routes.Admin.createGamebook());
+            }
+
+            File file = picture.getFile();
+
+            try {
+                file.renameTo(new File("public/images/covers/" + fileName));
+            } catch (Exception e) {
+                flash("error", "Възникна проблем с преместването на файла!");
+                return redirect(routes.Admin.createGamebook());
+            }
+            pictureName = fileName;
         }
 
         Gamebook gamebook = gamebookForm.get();
@@ -64,7 +90,19 @@ public class Admin extends Controller {
         gamebook.setDateCreated(currentDate.toString());
         gamebook.setUser(Integer.parseInt(session().get("user_id")));
 
+        // change book cover only if such was uploaded
+        if(picture != null) {
+            gamebook.setPicture("images/covers/" + pictureName);
+        }
+
         if(gamebook.getId() > 0) {
+
+            if(gamebookForm.hasErrors()){
+
+                flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
+                return redirect(routes.Admin.createGamebook());
+            }
+
             gamebook.update();
         }
         else {
@@ -116,6 +154,12 @@ public class Admin extends Controller {
                 .eq("gamebook_id", gamebookId)
                 .orderBy("number asc")
                 .findList();
+
+        for (int i = 0; i < episodes.size(); i++) {
+            String str = episodes.get(i).getText();
+            str = str.replaceAll("###(\\d+)###", "<a href='#episode$1' class='tooltipped' data-toggle='tooltip' data-placement='top' title='Връзка към свързания епизод.' class='btn btn-primary'>$1</a>");
+            episodes.get(i).setText(str);
+        }
 
         return ok(viewgamebook.render("View gamebook page!", gamebook, episodes));
     }
@@ -369,7 +413,7 @@ public class Admin extends Controller {
 		String title = values.get("title")[0];
 
     	Gamebook book = new Gamebook();
-    	book.setTitle( title );
+    	book.setTitle(title);
     	book.setAuthor( "Set Author..." );
     	book.setYear( 1900 );
     	book.setUser( Integer.parseInt( session().get("user_id") ) );

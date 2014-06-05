@@ -9,6 +9,8 @@
         <!-- CSS -->
         <link href='http://fonts.googleapis.com/css?family=Marck+Script&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+        <link href='http://cdn.datatables.net/1.10.0/css/jquery.dataTables.css' rel='stylesheet' type='text/css'>
+
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap-theme.css")">
@@ -29,7 +31,13 @@
         <script src="@routes.Assets.at("javascripts/jquery-ui-1.7.2.custom.min.js")"></script>
         <script src="@routes.Assets.at("javascripts/jHtmlArea-0.8.min.js")"></script>
 
+        <script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+
         <script src="@routes.Assets.at("javascripts/script.js")"></script>
+
+
+
+
 
     </head>
     <body>
@@ -75,6 +83,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">@session.get("username") <b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                <li><a href="@routes.Library.dashboard()">Потребителска част</a></li>
                                 <li><a href="@routes.Application.logout()">Изход</a></li>
                             </ul>
                         </li>
