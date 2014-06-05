@@ -23,15 +23,5 @@ $(document).ready(function() {
         $("#add-word-input").val("");
         $("#add-word-input").attr("placeholder", "Добави кодова дума");
     });
-
-
-    // datatable
-    $('#usersTable').dataTable();
-    $('#tableTests').dataTable();
-    $('#tableGamebooks').dataTable();
-
-    $('.dataTables_wrapper input, .dataTables_wrapper select').addClass('form-control').css({'width':'auto','display':'inline'});
-
-    $('.dataTables_wrapper .paginate_button').addClass('btn btn-default');
     
 });
