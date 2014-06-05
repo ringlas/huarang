@@ -95,16 +95,13 @@
 
 
             <h1>Админ панел</h1>
-
-            <div class="cold-md-12">
-                @if(flash.contains("success")) {
-                <div class="alert alert-success">@flash.get("success")</div>
-                }
-                @if(flash.contains("error")) {
-                <div class="alert alert-danger">@flash.get("error")</div>
-                }
-            </div>
-
+<div style="position: relative;">
+    <div class="msg">
+        <div class="alert alert-success">Книгата беше запазена успешно.</div>
+        <div class="alert alert-danger">Книгата не може да бъде запазена в момента. Моля опитайте отново по-късно.</div>
+        <div id="loadingMsg" class="alert alert-info">Заявката се изпраща. Моля изчакайте...</div>
+    </div>
+    </div>
             @content
 
             </div>

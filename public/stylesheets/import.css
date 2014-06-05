@@ -16,6 +16,16 @@ body {
     white-space: normal;
 }
 
+.msg {
+    position: absolute;
+    top: 0;
+    left: 400px;
+}
+
+.alert {
+    display: none;
+}
+
 .input-container {
     position: relative;
     height: 24px;

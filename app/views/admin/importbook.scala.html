@@ -4,13 +4,19 @@
 
         <script>
             function saveBook() {
+                loadingMsg( true );
                 $.ajax({
                     type :  "POST",
-                    dataType: 'json',
+//                    dataType: 'json',
                     data: getBook(),
                     url  :  "@controllers.admin.routes.Admin.saveImportGamebook()",
                     success: function(data){
-                        console.log(data);
+                        loadingMsg( false );
+                        showMsg( true, data.statusText );
+                    },
+                    error: function( data ) {
+                        loadingMsg( false );
+                        showMsg( false, data.statusText );
                     }
                 });
             }

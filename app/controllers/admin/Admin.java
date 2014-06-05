@@ -407,26 +407,27 @@ public class Admin extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result saveImportGamebook() {
-    final Map<String, String[]> values = request().body().asFormUrlEncoded();
-
-		String[] eps = values.get("episodes")[0].split(",,,");
-		String title = values.get("title")[0];
-
+    	final Map<String, String[]> values = request().body().asFormUrlEncoded();
     	Gamebook book = new Gamebook();
-    	book.setTitle(title);
-    	book.setAuthor( "Set Author..." );
-    	book.setYear( 1900 );
+
+    	book.setTitle( values.get("title")[0] );
+    	book.setAuthor( values.get("author")[0] );
+    	book.setYear( Integer.parseInt( values.get("year")[0] ) );
     	book.setUser( Integer.parseInt( session().get("user_id") ) );
+    	book.setIntro( values.get("intro")[0] );
+    	book.setDateCreated( (new Date()).toString() );
     	book.save();
 
+		int id =  book.getId();
+		String[] eps = values.get("episodes")[0].split(",,,");
 		for( int i = 0; i < eps.length; i++ ) {
 			Episode ep = new Episode();
 			ep.setText( eps[i] );
-			ep.setGamebook( book.getId() );
+			ep.setGamebook( id );
 			ep.setNumber( i + 1 );
 			ep.save();
 		}
 
-    	return ok("Няма резултати в базата данни!");
+    	return ok("Книгата е добавена успешно!");
     }
 }

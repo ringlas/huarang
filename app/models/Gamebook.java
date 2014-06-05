@@ -23,6 +23,7 @@ public class Gamebook extends Model {
     @Column(name="year", length = 4)
     private int year;
 
+ 	@Column(columnDefinition = "TEXT")
     private String intro;
 
     private String dateCreated;

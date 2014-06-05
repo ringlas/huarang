@@ -52,7 +52,7 @@ create table gamebook (
   title                     varchar(255),
   author                    varchar(255),
   year                      integer(4),
-  intro                     varchar(255),
+  intro                     TEXT,
   date_created              varchar(255),
   picture                   varchar(255),
   user_id                   integer,

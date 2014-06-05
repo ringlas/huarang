@@ -4,6 +4,23 @@ Array.prototype.last = function() {
     return this[ this.length-1 ];
 };
 
+function showMsg( success, msg ) {
+
+    var cls = success ? '.alert-success' : '.alert-danger';
+    $( cls ).css( {display:'block'}).fadeIn( 500).fadeOut( 3000 );
+    if( msg ) {
+        $( cls).html( msg);
+    };
+}
+
+function loadingMsg( visible ) {
+    if( visible ) {
+        $( '#loadingMsg').fadeIn( 500 );
+    } else {
+        $( '#loadingMsg').fadeOut( 0 );
+    }
+}
+
 $(document).ready(function () {
     textContainer = document.getElementById('textContainer');
     initStaticMenu();
@@ -54,7 +71,6 @@ function fileSelected() {
 }
 
 function getBook() {
-<<<<<<< HEAD
     var div = document.createElement('div');
     div.innerHTML  = document.getElementById( 'textContainer').innerHTML;
 
@@ -76,20 +92,23 @@ function getBook() {
 
     var text = div.innerHTML.replace( /<br>/g, '\n' );
 
-    return {
-        title: title,
-        episodes: text
-=======
-    var title, content;
-    var text = document.getElementById( 'textContainer').innerHTML;
-    //title = text.split( ''<br>' ')[0];
-    title = "Ledenite pirati";
-    content = text.replace('<br>', ',,,');
-    return {
-        title: title,
-        episodes: content
->>>>>>> 5e632021d92824a212ec61a8c7300669220d472e
-    };
+    var firstEpOffset = text.indexOf( ',,,' ); //The text before the first chapter is the intro
+
+    var intro = book.intro = text.substr( 0, firstEpOffset );
+    book.episodes = text.substr( firstEpOffset );
+
+
+    var firstNewLine = intro.indexOf('\n');
+    var secondNewLine = intro.indexOf('\n', firstNewLine + 1);
+
+    while( secondNewLine - firstNewLine < 3) {
+        firstNewLine = secondNewLine;
+        secondNewLine = intro.indexOf('\n', firstNewLine + 1);
+    }
+
+    book.author = intro.substring(firstNewLine, secondNewLine);
+
+    return book;
 }
 
 function resizeTextArea() {
@@ -186,6 +205,8 @@ function trimMapLength( map, len ) {
     return realLen + 1;
 }
 
+var book = {};
+
 function processText(text) {
     var max = -1;
 
@@ -206,6 +227,8 @@ function processText(text) {
     });
 
     //re-calculate the max chapter if there are occurences of big numbers in the book (like year 2013, etc..)
+    book.year = max; //if there's a year, it will most likely be the largest number
+
     max = trimMapLength( numbersMap, max );
     console.log( 'Chapters cut down to: ' + ( max - 1 ) );
 
@@ -302,6 +325,7 @@ function processText(text) {
     var ind = text.indexOf('<br>');
     var title = text.substr( 0, ind );
     text = '<h4>' + title + '</h4>' + text.substr( ind );
+    book.title = title;
 
     //new lines to <br>
     return text;
