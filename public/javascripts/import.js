@@ -29,12 +29,15 @@ $(document).ready(function () {
 
 function triggerInputField( id ) {
     $('#fileForm').find('#'+id).val('');
+    $('#fileInputLabel').html('Няма избран файл.');
     $('#'+id).trigger('click');
 }
 
 function fileSelected() {
     var file = document.getElementById('fileField').files[0];
+
     if (file) {
+        $('#fileInputLabel').html(file.name);
         var reader = new FileReader();
         reader.onload = function (e) {
             var text = reader.result;
@@ -43,8 +46,30 @@ function fileSelected() {
             resizeTextArea();
         }
 
-        reader.readAsText(file);
+        reader.readAsText(file, '');
     }
+    else {
+        $('#fileInputLabel').html('Няма избран файл.');
+    }
+}
+
+var title
+
+function getBook() {
+    var title, content;
+    var text = document.getElementById( 'textContainer').innerHTML;
+    title = text.split( ''<br>' ')[0];
+    content = text.replace()
+    return {
+        title: title,
+        content: content
+    };
+}
+
+function resizeTextArea() {
+    $('.textContainer').css({
+        height: window.innerHeight - 285
+    });
 }
 
 function filterDownArray( map, len ) {
@@ -82,12 +107,6 @@ function filterDownArray( map, len ) {
     };
 }
 
-function resizeTextArea() {
-    $('.textContainer').css({
-        height: window.innerHeight - 172
-    });
-}
-
 function filterUpArray( map, len ) {
     //calculate max offsets
     var maxOffsets = [],
@@ -122,6 +141,24 @@ function filterUpArray( map, len ) {
     };
 }
 
+function trimMapLength( map, len ) {
+    var miss = 5;
+    var realLen = len;
+    for ( var i = 0; i < len; i++) {
+        if( typeof map[i] == 'undefined' ) {
+            miss--;
+
+            if(! miss ) {
+                break;
+            }
+        } else {
+            realLen = i
+        }
+    }
+
+    return realLen
+}
+
 function processText(text) {
     var max = -1;
 
@@ -140,6 +177,10 @@ function processText(text) {
 
         return number;
     });
+
+    //re-calculate the max chapter if there are occurences of big numbers in the book (like year 2013, etc..)
+    var max = trimMapLength( numbersMap, max );
+    console.log( 'Chapters cut down to: ' + max );
 
     //we don't believe that there would be chapter "0", so we neglect it
     delete numbersMap[0];
@@ -248,11 +289,14 @@ function targetIsInside( target, element ) {
 
 function toggleButtonState( btn, pressed ){
     if( pressed == true ) {
-        btn.classList.add( 'pressed' );
+        btn.classList.add( 'btn-success' );
+        btn.classList.remove( 'btn-danger' );
     } else if( pressed == false ){
-        btn.classList.remove( 'pressed' );
+        btn.classList.remove( 'btn-success' );
+        btn.classList.add( 'btn-danger' );
     } else {
-        btn.classList.toggle( 'pressed' );
+        btn.classList.toggle( 'btn-success' );
+        btn.classList.toggle( 'btn-danger' );
     }
 }
 
@@ -338,6 +382,8 @@ function textToLink( range ) {
         var div = document.createElement('div');
         div.classList.add('number');
         div.classList.add('btn');
+        div.classList.add('btn-danger');
+        div.addEventListener( 'click', function( e ) { toggleButtonState(e.target); } );
         div.id = 'ep_btn_' + (id++);
         div.innerHTML = range.toString();
 
@@ -351,7 +397,7 @@ function textToLink( range ) {
 //chapter:    <div class="chapter" id="ep_' + number + '">' + number + '</div>
 
 function getLinkString( text ) {
-    return '<div class="number btn" id="ep_btn_' + (id++) + '" onclick="toggleButtonState( this )">' + text + '</div>';
+    return '<div class="number btn-danger btn" id="ep_btn_' + (id++) + '" onclick="toggleButtonState( this )">' + text + '</div>';
 }
 
 function getChapterString( text ) {
@@ -424,7 +470,7 @@ function initFloatingMenu() {
         if( target.classList.contains('number') ) {
             menu.deleteBtn.action = function() { elementToText( target ) };
 
-            if( target.classList.contains('pressed') ) {
+            if( target.classList.contains('btn-success') ) {
                 menu.hideLinkBtn();
                 menu.showUnlinkBtn();
                 menu.showChapterBtn();

@@ -23,7 +23,7 @@
                 @for(test <- tests) {
                     <tr>
                         <td>@test.getTitle()</td>
-                        <td><span class="label label-info">@test.getGamebook()</span></td>
+                        <td><span class="label label-info">@test.getGamebook().getTitle()</span></td>
                         <td>
                             <form method="post" action="@controllers.admin.routes.Admin.deleteUser(test.getId())">
                                 <a href="@controllers.admin.routes.Admin.viewUser(test.getId())" class="btn btn-info">Прегледай</a>

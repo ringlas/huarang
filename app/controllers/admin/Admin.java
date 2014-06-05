@@ -9,6 +9,7 @@ import play.libs.Crypto;
 import play.mvc.Controller;
 import play.mvc.*;
 import java.util.Date;
+import java.util.Map;
 import java.util.List;
 
 import scala.util.parsing.combinator.testing.Str;
@@ -327,10 +328,20 @@ public class Admin extends Controller {
 
         Form<Test> testForm = Form.form(Test.class).bindFromRequest();
 
-        Test test = testForm.get();
-        int testId = test.getId();
 
-        if(testId != 0) {
+
+        if(testForm.hasErrors()){
+
+            flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
+            return redirect(routes.Admin.createTest());
+        }
+
+        int gamebook_id = Integer.parseInt(testForm.data().get("gamebook_id"));
+
+        Test test = testForm.get();
+        test.setGamebook(gamebook_id);
+
+        if(test.getId() != 0) {
             // Update the user
             test.update();
             flash("success", "Успешни промени!");
@@ -343,5 +354,35 @@ public class Admin extends Controller {
             flash("success", "Успешни промени!");
             return redirect(routes.Admin.listTests());
         }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result importGamebook() {
+        return ok(importbook.render("lqllq!"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result saveImportGamebook() {
+    final Map<String, String[]> values = request().body().asFormUrlEncoded();
+
+		String[] eps = values.get("episodes")[0].split(",,,");
+		String title = values.get("title")[0];
+
+    	Gamebook book = new Gamebook();
+    	book.setTitle( title );
+    	book.setAuthor( "Set Author..." );
+    	book.setYear( 1900 );
+    	book.setUser( Integer.parseInt( session().get("user_id") ) );
+    	book.save();
+
+		for( int i = 0; i < eps.length; i++ ) {
+			Episode ep = new Episode();
+			ep.setText( eps[i] );
+			ep.setGamebook( book.getId() );
+			ep.setNumber( i + 1 );
+			ep.save();
+		}
+
+    	return ok("Няма резултати в базата данни!");
     }
 }

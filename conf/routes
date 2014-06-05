@@ -13,7 +13,6 @@ GET     /logout                             controllers.Application.logout()
 
 # Library pages
 
-GET     /dashboard                          controllers.Library.dashboard()
 GET     /gamebook/:id                       controllers.Library.displayGamebook(id: Integer)
 GET     /gamebook/:id/start                 controllers.Library.startGame(id: Integer, replay: Boolean)
 GET     /gamebook/:id/generate/:number      controllers.Library.generateEpisode(id: Integer, number: Integer)
@@ -45,6 +44,9 @@ POST    /admin/delete/user/:id              controllers.admin.Admin.deleteUser(i
 GET     /admin/list/tests                   controllers.admin.Admin.listTests()
 GET     /admin/add/test                     controllers.admin.Admin.createTest()
 POST    /admin/add/test                     controllers.admin.Admin.saveTest()
+
+GET     /admin/import/gamebook             controllers.admin.Admin.importGamebook()
+POST     /admin/import/gamebook              controllers.admin.Admin.saveImportGamebook()
 
 # Gamebook pages
 

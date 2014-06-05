@@ -1,0 +1,47 @@
+@(message: String)
+
+@bookimport(".:: Хуаранг и Кумихо ::.") {
+
+        <script>
+            function saveBook() {
+                $.ajax({
+                    type :  "POST",
+                    dataType: 'json',
+                    data: { title: 'Some Title', episodes: 'aaaaaaaaa,,,bbbbbbbb,,,cccccccc' },
+                    url  :  "@controllers.admin.routes.Admin.saveImportGamebook()",
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            }
+        </script>
+
+<form id = 'fileForm' >
+    <div class="input-container">
+        <input type="file" name="fileToUpload" id="fileField" class="hidden-input" onchange="fileSelected();"/>
+
+        <div class="" id="fileInputLabel">Няма избран файл.</div>
+        <div class="fake-btn btn btn-warning" onclick="triggerInputField('fileField');">Отвори Файл</div>
+        <div class="fake-btn btn btn-warning" id="save-btn" onclick="saveBook();">Запази Книгата</div>
+    </div>
+</form>
+<div class="centeredContainer">
+    <div class="navigation" id="sideMenu">
+        <div class="menu-btn btn btn-warning icon-link"></div>
+        <div class="menu-btn btn btn-warning icon-unlink"></div>
+        <div class="menu-btn btn btn-warning icon-ellipsis"></div>
+        <div class="menu-btn btn btn-danger icon-cancel-circled"></div>
+    </div>
+    <div id="textContainer" class="textContainer selectable">
+        Няма налични данни.
+    </div>
+    <div style="clear:both;"></div>
+</div>
+<div class="floatingMenu" id="floatingMenu" >
+    <div class="menu-btn btn btn-warning icon-link"></div>
+    <div class="menu-btn btn btn-warning icon-unlink"></div>
+    <div class="menu-btn btn btn-warning icon-ellipsis"></div>
+    <div class="menu-btn btn btn-danger icon-cancel-circled"></div>
+</div>
+
+}

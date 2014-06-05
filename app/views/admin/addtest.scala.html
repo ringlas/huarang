@@ -18,13 +18,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="gamebook">Изберете книга-игра:</label>
+                    <label for="gamebook_id">Изберете книга-игра:</label>
 
-                    <select id="gamebook" name="gamebook" class="form-control">
+                    <select id="gamebook_id" name="gamebook_id" class="form-control">
 
                         @for(gamebook <- gamebooks) {
 
-                        <option value="@gamebook">@gamebook.getTitle()</option>
+                        <option value="@gamebook.getId()">@gamebook.getTitle()</option>
 
                         }
 
