@@ -21,7 +21,7 @@
 
             <h2>Създаване на книга-игра</h2>
 
-            <form action="@controllers.admin.routes.Admin.saveGamebook()" method="post" role="form">
+            <form action="@controllers.admin.routes.Admin.saveGamebook()" method="post" role="form" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="title">Въведете заглавие:</label>
@@ -43,6 +43,11 @@
                     <textarea id="editor" name="intro" id="text" class="form-control" rows="15">
 
                     </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="picture">Качете корица: <br>(препоръчителен размер: 200px на 267px, <span style="color:#ff0000;">*.png форматът е задължителен!</span>)</label>
+                    <input type="file" name="picture" id="picture">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Запази</button>

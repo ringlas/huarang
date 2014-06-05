@@ -7,7 +7,7 @@
                 $.ajax({
                     type :  "POST",
                     dataType: 'json',
-                    data: { title: 'Some Title', episodes: 'aaaaaaaaa,,,bbbbbbbb,,,cccccccc' },
+                    data: getBook(),
                     url  :  "@controllers.admin.routes.Admin.saveImportGamebook()",
                     success: function(data){
                         console.log(data);

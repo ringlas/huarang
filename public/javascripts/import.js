@@ -53,16 +53,15 @@ function fileSelected() {
     }
 }
 
-var title
-
 function getBook() {
     var title, content;
     var text = document.getElementById( 'textContainer').innerHTML;
-    title = text.split( ''<br>' ')[0];
-    content = text.replace()
+    //title = text.split( ''<br>' ')[0];
+    title = "Ledenite pirati";
+    content = text.replace('<br>', ',,,');
     return {
         title: title,
-        content: content
+        episodes: content
     };
 }
 

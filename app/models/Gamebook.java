@@ -27,6 +27,8 @@ public class Gamebook extends Model {
 
     private String dateCreated;
 
+    private String picture;
+
     @ManyToOne
     private User user;
 
@@ -78,6 +80,10 @@ public class Gamebook extends Model {
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+    public String getPicture() { return picture; }
+
+    public void setPicture(String picture) { this.picture = picture; }
 
     public static Finder<Integer, Gamebook> find = new Finder<Integer, Gamebook>(
             Integer.class, Gamebook.class

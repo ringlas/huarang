@@ -54,6 +54,7 @@ create table gamebook (
   year                      integer(4),
   intro                     varchar(255),
   date_created              varchar(255),
+  picture                   varchar(255),
   user_id                   integer,
   constraint pk_gamebook primary key (id))
 ;
