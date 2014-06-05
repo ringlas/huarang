@@ -2,7 +2,7 @@ var menu, textContainer, id = 0;
 
 Array.prototype.last = function() {
     return this[ this.length-1 ];
-}
+};
 
 $(document).ready(function () {
     textContainer = document.getElementById('textContainer');
@@ -44,7 +44,7 @@ function fileSelected() {
             textContainer.innerHTML = processText(text);
             textContainer.scrollTop = 0;
             resizeTextArea();
-        }
+        };
 
         reader.readAsText(file, '');
     }
@@ -53,16 +53,31 @@ function fileSelected() {
     }
 }
 
-var title
-
 function getBook() {
-    var title, content;
-    var text = document.getElementById( 'textContainer').innerHTML;
-    title = text.split( ''<br>' ')[0];
-    content = text.replace()
+    var div = document.createElement('div');
+    div.innerHTML  = document.getElementById( 'textContainer').innerHTML;
+
+    var header = div.children[0];
+    var title = header.innerHTML;
+    div.replaceChild( document.createTextNode( title ), header );
+
+    $(div).children('.btn-danger').each( function( i, el ) {
+        div.replaceChild( document.createTextNode( el.innerHTML ), el );
+    } );
+
+    $(div).children('.btn-success').each( function( i, el ) {
+        div.replaceChild( document.createTextNode( '###' + el.innerHTML + '###' ), el );
+    } );
+
+    $(div).children('.chapter').each( function( i, el ) {
+        div.replaceChild( document.createTextNode( ',,,' + el.innerHTML ), el );
+    } );
+
+    var text = div.innerHTML.replace( /<br>/g, '\n' );
+
     return {
         title: title,
-        content: content
+        episodes: text
     };
 }
 
@@ -122,8 +137,9 @@ function filterUpArray( map, len ) {
         maxOffsets[i] = Math.min( maxOffsets[ i + 1 ], ( map[i] ? map[i].last() : maxOffset ) );
     }
 
+    newCandidates[ len - 1 ] = map[ len - 1 ];
     for (i = len - 2; i >= 0; i--) {
-        m = map[i]
+        m = map[i];
         if( m ) {
             max = maxOffsets[i + 1];
             var oldLen = m.length;
@@ -152,11 +168,11 @@ function trimMapLength( map, len ) {
                 break;
             }
         } else {
-            realLen = i
+            realLen = i;
         }
     }
 
-    return realLen
+    return realLen + 1;
 }
 
 function processText(text) {
@@ -166,7 +182,7 @@ function processText(text) {
         numbersMap = {};
 
     //map all numbers encountered in the text
-    text = text.replace(/(\d+)/g, function (match, number, offset, string) {
+    text = text.trim().replace(/(\d+)/g, function (match, number, offset, string) {
 
         max = Math.max(max, number) + 1;
 
@@ -179,8 +195,8 @@ function processText(text) {
     });
 
     //re-calculate the max chapter if there are occurences of big numbers in the book (like year 2013, etc..)
-    var max = trimMapLength( numbersMap, max );
-    console.log( 'Chapters cut down to: ' + max );
+    max = trimMapLength( numbersMap, max );
+    console.log( 'Chapters cut down to: ' + ( max - 1 ) );
 
     //we don't believe that there would be chapter "0", so we neglect it
     delete numbersMap[0];
@@ -270,8 +286,13 @@ function processText(text) {
         return getChapterString( number );
     });
 
+    text = text.replace( /[\r\n|\n\r|\n|\r]/g, '<br>');
+
+    var ind = text.indexOf('<br>');
+    var title = text.substr( 0, ind );
+    text = '<h4>' + title + '</h4>' + text.substr( ind );
+
     //new lines to <br>
-    return text.replace( /[\r\n|\n\r|\n|\r]/g, '<br>');
     return text;
 }
 
@@ -360,10 +381,10 @@ function selectionToText() {
     }
 }
 
-function convertSelectedToChapter( range ) {
+function convertSelectedToChapter( ) {
     var selection = window.getSelection();
     if ( selection.rangeCount > 0 ) {
-        var range = selection.getRangeAt(0);
+        range = selection.getRangeAt(0);
 
         if( range.toString().length > 0 && range.startContainer == range.endContainer ) {
             var div = document.createElement('div');
@@ -422,27 +443,27 @@ function initStaticMenu() {
     staticMenu.linkBtn.mousedown(function(e){
         e.preventDefault();
         e.stopPropagation();
-    }).click( function( e ) { staticMenu.clickHandler( staticMenu.linkBtn, e ) } );
+    }).click( function( e ) { staticMenu.clickHandler( staticMenu.linkBtn, e ); } );
 
     staticMenu.unlinkBtn.mousedown(function(e){
         e.preventDefault();
         e.stopPropagation();
-    }).click( function( e ) { staticMenu.clickHandler( staticMenu.unlinkBtn, e ) } );
+    }).click( function( e ) { staticMenu.clickHandler( staticMenu.unlinkBtn, e ); } );
 
     staticMenu.chapterBtn.mousedown(function(e){
         e.preventDefault();
         e.stopPropagation();
-    }).click( function( e ) { staticMenu.clickHandler( staticMenu.chapterBtn, e ) } );
+    }).click( function( e ) { staticMenu.clickHandler( staticMenu.chapterBtn, e ); } );
 
     staticMenu.deleteBtn.mousedown(function(e){
         e.preventDefault();
         e.stopPropagation();
-    }).click( function( e ) { staticMenu.clickHandler( staticMenu.deleteBtn, e ) } );
+    }).click( function( e ) { staticMenu.clickHandler( staticMenu.deleteBtn, e ); } );
 
     staticMenu.linkBtn.action = function() { trySetSelectedButtonsState( true ); };
     staticMenu.unlinkBtn.action = function() { trySetSelectedButtonsState( false ); };
-    staticMenu.chapterBtn.action = function() { convertSelectedToChapter( getSelectedHtml() ) };
-    staticMenu.deleteBtn.action = function() { selectionToText() };
+    staticMenu.chapterBtn.action = function() { convertSelectedToChapter( ); };
+    staticMenu.deleteBtn.action = function() { selectionToText(); };
 }
 
 function initFloatingMenu() {
@@ -468,50 +489,40 @@ function initFloatingMenu() {
         menu.css({ left: x, top: y });
         menu.visible = true;
         if( target.classList.contains('number') ) {
-            menu.deleteBtn.action = function() { elementToText( target ) };
+            menu.deleteBtn.action = function() { elementToText( target ); };
 
             if( target.classList.contains('btn-success') ) {
                 menu.hideLinkBtn();
                 menu.showUnlinkBtn();
                 menu.showChapterBtn();
 
-                menu.unlinkBtn.action = function() { toggleButtonState( target, false ) };
-                menu.chapterBtn.action = function() { linkToChapter( target ) };
+                menu.unlinkBtn.action = function() { toggleButtonState( target, false ); };
+                menu.chapterBtn.action = function() { linkToChapter( target ); };
             } else {
                 menu.showLinkBtn();
                 menu.hideUnlinkBtn();
                 menu.showChapterBtn();
 
-                menu.linkBtn.action = function() { toggleButtonState(  target, true ) };
-                menu.chapterBtn.action = function() { linkToChapter( target ) };
+                menu.linkBtn.action = function() { toggleButtonState(  target, true ); };
+                menu.chapterBtn.action = function() { linkToChapter( target ); };
             }
         } else if( target.classList.contains('chapter')) {
             menu.showLinkBtn();
             menu.hideUnlinkBtn();
             menu.hideChapterBtn();
 
-            menu.linkBtn.action = function() { chapterToLink( target ) };
-            menu.deleteBtn.action = function() { elementToText( target ) };
+            menu.linkBtn.action = function() { chapterToLink( target ); };
+            menu.deleteBtn.action = function() { elementToText( target ); };
         } else {
             menu.linkBtn.action = function() { trySetSelectedButtonsState( true ); };
             menu.unlinkBtn.action = function() { trySetSelectedButtonsState( false ); };
-            menu.chapterBtn.action = function() { convertSelectedToChapter( getSelectedHtml() ) };
-            menu.deleteBtn.action = function() { selectionToText() };
+            menu.chapterBtn.action = function() { convertSelectedToChapter(); };
+            menu.deleteBtn.action = function() { selectionToText(); };
 
             menu.showLinkBtn();
             menu.showChapterBtn();
             menu.showUnlinkBtn();
         }
-
-        var book = {
-            chapters: [
-                {
-                    text: "",
-                    links: []
-                }
-            ]
-        }
-
     };
 
     menu.clickHandler = function( btn, e ) {
@@ -526,20 +537,20 @@ function initFloatingMenu() {
     menu.linkBtn.mousedown(function(e){
         e.preventDefault();
         e.stopPropagation();
-    }).click( function( e ) { menu.clickHandler( menu.linkBtn, e ) } );
+    }).click( function( e ) { menu.clickHandler( menu.linkBtn, e ); } );
 
     menu.unlinkBtn.mousedown(function(e){
         e.preventDefault();
         e.stopPropagation();
-    }).click( function( e ) { menu.clickHandler( menu.unlinkBtn, e ) } );
+    }).click( function( e ) { menu.clickHandler( menu.unlinkBtn, e ); } );
 
     menu.chapterBtn.mousedown(function(e){
         e.preventDefault();
         e.stopPropagation();
-    }).click( function( e ) { menu.clickHandler( menu.chapterBtn, e ) } );
+    }).click( function( e ) { menu.clickHandler( menu.chapterBtn, e ); } );
 
     menu.deleteBtn.mousedown(function(e){
         e.preventDefault();
         e.stopPropagation();
-    }).click( function( e ) { menu.clickHandler( menu.deleteBtn, e ) } );
+    }).click( function( e ) { menu.clickHandler( menu.deleteBtn, e ); } );
 }

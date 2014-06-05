@@ -77,21 +77,19 @@ body {
     margin-top: 20px;
 }
 
-/*.unselectable {*/
-    /*-khtml-user-select: none;*/
-    /*-webkit-user-select: none;*/
-    /*-moz-user-select: none;*/
-    /*-ms-user-select: none;*/
-/*}*/
+.unselectable {
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
 
-/*.selectable {*/
-    /*-khtml-user-select: all;*/
-    /*-webkit-user-select: all;*/
-    /*-moz-user-select: all;*/
-    /*-ms-user-select: all;*/
-
-    /*cursor: text;*/
-/*}*/
+.selectable {
+    -khtml-user-select: all;
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+}
 
 .number {
     display: inline-block;
