@@ -173,3 +173,17 @@ ul.book-list li{
 .panel-body{
     padding-bottom: 50px;
 }
+
+/* Data tables */
+
+.dataTables_wrapper{
+    margin-top: 20px;
+}
+
+.table.dataTable.no-footer{
+    border-bottom: 1px solid #dddddd;
+}
+
+.dataTables_wrapper tr:hover{
+    background: #f7f7f7;
+}
