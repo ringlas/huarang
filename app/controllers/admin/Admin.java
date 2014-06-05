@@ -155,6 +155,12 @@ public class Admin extends Controller {
                 .orderBy("number asc")
                 .findList();
 
+        for (int i = 0; i < episodes.size(); i++) {
+            String str = episodes.get(i).getText();
+            str = str.replaceAll("###(\\d+)###", "<a href='#episode$1' class='tooltipped' data-toggle='tooltip' data-placement='top' title='Връзка към свързания епизод.' class='btn btn-primary'>$1</a>");
+            episodes.get(i).setText(str);
+        }
+
         return ok(viewgamebook.render("View gamebook page!", gamebook, episodes));
     }
 

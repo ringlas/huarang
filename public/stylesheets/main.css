@@ -187,3 +187,7 @@ ul.book-list li{
 .dataTables_wrapper tr:hover{
     background: #f7f7f7;
 }
+
+.hashtagbtn {
+    background: #9b59b6 !important;
+}

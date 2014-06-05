@@ -64,7 +64,7 @@
 
                 @for(episode <- episodes) {
                 <tr>
-                    <td> <strong>@Html(episode.getNumber().toString).</strong> </td>
+                    <td> <div id="episode@episode.getNumber().toString"> <strong>@Html(episode.getNumber().toString).</strong> </div> </td>
                     <td> @Html(episode.getText()) </td>
                     <td>
 
