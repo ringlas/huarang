@@ -87,7 +87,7 @@ function getBook() {
     } );
 
     $(div).children('.chapter').each( function( i, el ) {
-        div.replaceChild( document.createTextNode( ',,,' + el.innerHTML ), el );
+        div.replaceChild( document.createTextNode( ',,,' ), el );
     } );
 
     var text = div.innerHTML.replace( /<br>/g, '\n' );
@@ -213,8 +213,34 @@ function processText(text) {
     var id = 1,
         numbersMap = {};
 
+    //trim white spaces on both ends
+    text = text.trim();
+
+    //match title
+    var titleCandidates = text.match(/[а-яА-Я\s]+?[\r|\n]/g);
+    var title = "No Title";
+    for(var t in titleCandidates) {
+        if(titleCandidates[t].length > 2) {
+            title = titleCandidates[t];
+            console.log( '"' + title + '" guessed as title ');
+            break;
+        }
+    }
+
+    text = text.replace( title, '!@#$%');
+
+    //try to replace rouge new lines
+    var c = 0;
+    text = text.replace(/[\r\n|\n\r|\n|\r]+/g, '\n');
+    text = text.replace(/([а-я,:-]\s*)\n+(\s*[,:-а-я])/g, function(match, word1, word2) {
+        c++;
+        return word1 + ' ' + word2;
+    } );
+
+    console.log( c + ' rouge new lines found and removed');
+
     //map all numbers encountered in the text
-    text = text.trim().replace(/(\d+)/g, function (match, number, offset, string) {
+    text = text.replace(/(\d+)/g, function (match, number, offset, string) {
 
         max = Math.max(max, number) + 1;
 
@@ -282,7 +308,7 @@ function processText(text) {
         }
 
         for( j = unr.length - 1; j >= 0; j--) {
-            var reg = new RegExp( i + '\\s*[\\n|\\r]|[\\n|\\r]\\s*' + i );
+            var reg = new RegExp( i + '\\s*\\n|\\n\\s*' + i );
             if( reg.test( text.substr( unr[j] - 10, 20 ) ) ) {
                 arr[i] = [unr[j]];
                 count++;
@@ -322,9 +348,8 @@ function processText(text) {
 
     text = text.replace( /[\r\n|\n\r|\n|\r]/g, '<br>');
 
-    var ind = text.indexOf('<br>');
-    var title = text.substr( 0, ind );
-    text = '<h4>' + title + '</h4>' + text.substr( ind );
+    text = text.replace( '!@#$%', '<h4>' + title + '</h4>');
+
     book.title = title;
 
     //new lines to <br>
@@ -453,7 +478,7 @@ function textToLink( range ) {
 //chapter:    <div class="chapter" id="ep_' + number + '">' + number + '</div>
 
 function getLinkString( text ) {
-    return '<div class="number btn-danger btn" id="ep_btn_' + (id++) + '" onclick="toggleButtonState( this )">' + text + '</div>';
+    return '<div class="number btn-success btn" id="ep_btn_' + (id++) + '" onclick="toggleButtonState( this )">' + text + '</div>';
 }
 
 function getChapterString( text ) {
