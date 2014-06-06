@@ -1,7 +1,7 @@
 @(message: String)(gamebooks: List[Gamebook])
 
 
-@layout(".:: Хуаранг и Кумихо ::.") {
+@layout(".:: Онлайн библиотека за книги-игри ::.") {
     <div class="row">
 
         <div class="clear"></div>
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="play-btn">
-                        <a href="@routes.Application.home()" class="btn btn-success">Играй</a>
+                        <a href="@routes.Application.home()" class="btn btn-warning">Играй</a>
                     </div>
 
 
@@ -41,7 +41,11 @@
 
                 <li>
                     <div class="book-cover">
-
+                        @if(gamebook.getPicture() != null){
+                            <img src="@routes.Assets.at(gamebook.getPicture())" class="img-responsive">
+                        } else {
+                            <img src='@routes.Assets.at("images/covers/no-cover.jpg")' class="img-responsive">
+                        }
                     </div>
 
                     <div class="book-title">

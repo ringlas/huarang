@@ -2,43 +2,43 @@
 
 @main(".:: Хуаранг и Кумихо ::.") {
 
-
 <script type="text/javascript">
-            $.ajax({
-              dataType: "json",
-              url: '@routes.GamebookController.generateEpisode(number)',
-              data: 1,
-              success: function(response){
-                jsonData = response;
-                displayEpisode(jsonData);
-              }
-            });
+    $.ajax({
+      dataType: "json",
+      url: '@routes.GamebookController.generateEpisode(number)',
+      data: 1,
+      success: function(response){
+        jsonData = response;
+        displayEpisode(jsonData);
+      }
+    });
 
-            function replaceAll(find, replace, str) {
-                return str.replace(new RegExp(find, 'g'), replace);
-            }
+    function replaceAll(find, replace, str) {
+        return str.replace(new RegExp(find, 'g'), replace);
+    }
 
-            function displayEpisode(data){
+    function displayEpisode(data){
 
-                data.text = fixLinks(data.text, data.episodeLinks);
+        data.text = fixLinks(data.text, data.episodeLinks);
 
-                $('.episode').html('<h1 class="episode-title text-center"> .: Епизод ' + @number + ' :. </h1>' + data.text);
-            }
+        $('.episode').html('<h1 class="episode-title text-center"> .: Епизод ' + @number + ' :. </h1>' + data.text);
+    }
 
-            function fixLinks(paragraph, links) {
-                len = links.length;
-                for(var i = 0; i < len; i++) {
-                    l = links[i];
+    function fixLinks(paragraph) {
 
-                    str = "<a href='" + l.goToEpisode + "' class='go-to-section'>" + l.text + "</a>";
+        re = new RegExp(/###(\d+)###/g);
 
-                    re = new RegExp("###\\d+###");
+        paragraph = paragraph.replace(re, replacer);
 
-                    paragraph = paragraph.replace(re, str);
-                }
-                return paragraph;
-            }
+        return paragraph;
+    }
 
+    function replacer(match, p1, offset, string){
+
+        str = "<a href='/display/" + p1 + "' class='go-to-section'>" + p1 + "</a>";
+
+        return str;
+    }
 
 </script>
 

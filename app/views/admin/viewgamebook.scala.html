@@ -1,6 +1,6 @@
 @(message: String)(gamebook: Gamebook)(episodes: List[Episode])
 
-@admin(".:: Хуаранг и Кумихо ::.") {
+@admin(".:: Преглед на книга-игра ::.") {
 
     <script>
         $(document).ready(function(){
@@ -38,6 +38,16 @@
                     <tr>
                         <td> <strong>Интро текст:</strong> </td>
                         <td> @Html(gamebook.getIntro()) </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Корица:</strong> </td>
+                        <td>
+                            @if(gamebook.getPicture() != null){
+                            <img src="@routes.Assets.at(gamebook.getPicture())" class="img-responsive">
+                            } else {
+                            <img src='@routes.Assets.at("images/covers/no-cover.jpg")' class="img-responsive">
+                            }
+                        </td>
                     </tr>
                 </tbody>
             </table>

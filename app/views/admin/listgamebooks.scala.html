@@ -1,6 +1,6 @@
 @(title: String)(gamebooks: List[Gamebook])
 
-@admin(".:: Хуаранг и Кумихо ::.") {
+@admin(".:: Списък с книги-игри ::.") {
 
 <script>
     $(document).ready(function() {
@@ -23,6 +23,7 @@
             <h2>Списък с книги-игри</h2>
 
             <a href="@controllers.admin.routes.Admin.createGamebook()" class="btn btn-success">Създай нова книга-игра</a>
+            <a href="@controllers.admin.routes.Admin.importGamebook()" class="btn btn-warning">Импортирай книга-игра</a>
 
             <table id="tableGamebooks" class="table table-stripped">
                 <thead>

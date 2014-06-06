@@ -63,13 +63,15 @@ public class Admin extends Controller {
 
         String pictureName = "";
 
+        Gamebook gamebook = gamebookForm.get();
+
         if (picture != null) {
             String fileName = picture.getFilename();
             String contentType = picture.getContentType();
 
-            if(!contentType.equals("image/png")){
+            if(!contentType.equals("image/png") && !contentType.equals("image/jpeg")){
                 flash("error", "Невалидно разширение на файл!");
-                return redirect(routes.Admin.createGamebook());
+                return redirect(routes.Admin.listGamebooks());
             }
 
             File file = picture.getFile();
@@ -78,12 +80,10 @@ public class Admin extends Controller {
                 file.renameTo(new File("public/images/covers/" + fileName));
             } catch (Exception e) {
                 flash("error", "Възникна проблем с преместването на файла!");
-                return redirect(routes.Admin.createGamebook());
+                return redirect(routes.Admin.listGamebooks());
             }
             pictureName = fileName;
         }
-
-        Gamebook gamebook = gamebookForm.get();
 
         // set all fields
         Date currentDate = new Date();
@@ -100,12 +100,19 @@ public class Admin extends Controller {
             if(gamebookForm.hasErrors()){
 
                 flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
-                return redirect(routes.Admin.createGamebook());
+                return redirect(routes.Admin.editGamebook(gamebook.getId()));
             }
 
             gamebook.update();
         }
         else {
+
+            if(gamebookForm.hasErrors()){
+
+                flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
+                return redirect(routes.Admin.createGamebook());
+            }
+
             // Save the gamebook
             gamebook.save();
         }
@@ -372,8 +379,6 @@ public class Admin extends Controller {
 
         Form<Test> testForm = Form.form(Test.class).bindFromRequest();
 
-
-
         if(testForm.hasErrors()){
 
             flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
@@ -412,14 +417,20 @@ public class Admin extends Controller {
 
     	book.setTitle( values.get("title")[0] );
     	book.setAuthor( values.get("author")[0] );
-    	book.setYear( Integer.parseInt( values.get("year")[0] ) );
-    	book.setUser( Integer.parseInt( session().get("user_id") ) );
-    	book.setIntro( values.get("intro")[0] );
-    	book.setDateCreated( (new Date()).toString() );
+    	book.setYear(Integer.parseInt(values.get("year")[0]));
+    	book.setUser(Integer.parseInt(session().get("user_id")));
+    	book.setIntro(values.get("intro")[0]);
+    	book.setDateCreated((new Date()).toString());
     	book.save();
 
 		int id =  book.getId();
-		String[] eps = values.get("episodes")[0].split(",,,");
+        String text = values.get("episodes")[0];
+
+        if(text.startsWith(",,,")){
+            text = text.substring(3);
+        }
+
+		String[] eps = text.split(",,,");
 		for( int i = 0; i < eps.length; i++ ) {
 			Episode ep = new Episode();
 			ep.setText( eps[i] );

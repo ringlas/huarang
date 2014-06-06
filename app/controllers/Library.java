@@ -23,7 +23,7 @@ public class Library extends Controller {
     public static Result dashboard() {
 
         List<Gamebook> gamebooks = Gamebook.find.where()
-                .eq("user_id", session().get("user_id"))
+                .ne("title", "ХУАРАНГ И КУМИХО")
                 .findList();
 
         return ok(dashboard.render("Dashboard page!", gamebooks));

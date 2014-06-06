@@ -1,8 +1,11 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import models.CharacterSheetHuarang;
 import models.Episode;
+import models.Gamebook;
 import play.data.Form;
+import play.db.ebean.EbeanPlugin;
 import play.mvc.*;
 import play.libs.Json;
 
@@ -106,7 +109,14 @@ public class GamebookController extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result generateEpisode(int number) {
 
-        Episode episode = Episode.find.byId(number);
+        Gamebook gamebook = Gamebook.find.where()
+                .eq("title", "ХУАРАНГ И КУМИХО")
+                .findUnique();
+
+        Episode episode = Episode.find.where()
+                .eq("gamebook_id", gamebook.getId())
+                .eq("number", number)
+                .findUnique();
 
         if(episode != null) {
             episode.setText(episode.getText().replaceAll("\\n", "<br>"));

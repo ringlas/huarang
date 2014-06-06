@@ -51,14 +51,21 @@ public class Application extends Controller {
 
     public static Result createUser() {
         Form<User> userForm = Form.form(User.class).bindFromRequest();
+        DynamicForm requestData = Form.form().bindFromRequest();
 
         if(userForm.hasErrors()){
-
             flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
             return redirect(routes.Application.login());
         }
 
         User user = userForm.get();
+        String password = user.getPassword();
+        String confirmPassword = requestData.get("confirm_password");
+
+        if(password.isEmpty() || !password.equals(confirmPassword)) {
+            flash("error", "Паролите не съвпадат!");
+            return redirect(routes.Application.login());
+        }
 
         // Set the default group to all registered users as public
         user.setRole("public");

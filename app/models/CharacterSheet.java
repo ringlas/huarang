@@ -23,7 +23,7 @@ public class CharacterSheet extends Model {
     private String codewords;
 
     @Lob
-    @Column(name="notes", length = 512)
+    @Column(columnDefinition = "TEXT")
     private String notes;
 
     @ManyToOne

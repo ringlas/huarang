@@ -8,7 +8,7 @@ create table character_sheet (
   current_episode           integer,
   date_created              varchar(255),
   codewords                 text,
-  notes                     text,
+  notes                     TEXT,
   user_id                   integer,
   gamebook_id               integer,
   constraint pk_character_sheet primary key (id))
