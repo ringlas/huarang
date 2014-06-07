@@ -221,7 +221,7 @@ function processText(text) {
     var title = "No Title";
     for(var t in titleCandidates) {
         if(titleCandidates[t].length > 2) {
-            title = titleCandidates[t];
+            title = titleCandidates[t].replace(/[\r|\n]/g, '');
             console.log( '"' + title + '" guessed as title ');
             break;
         }
