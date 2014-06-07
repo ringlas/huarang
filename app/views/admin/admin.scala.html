@@ -35,10 +35,6 @@
 
         <script src="@routes.Assets.at("javascripts/script.js")"></script>
 
-
-
-
-
     </head>
     <body>
 
@@ -70,15 +66,15 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Книги-игри <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li @if(request.uri.equals(controllers.admin.routes.Admin.listGamebooks().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.listGamebooks()">Виж всички</a></li>
-                        <li @if(request.uri.equals(controllers.admin.routes.Admin.createGamebook().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.createGamebook()">Добави нова</a></li>
-                    </ul>
+                                <li @if(request.uri.equals(controllers.admin.routes.Admin.createGamebook().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.createGamebook()">Добави нова</a></li>
+                            </ul>
                     </li>
                     <li class="dropdown @if(request.uri.equals(controllers.admin.routes.Admin.listUsers().toString()) || request.uri.equals(controllers.admin.routes.Admin.createUser().toString())) { active }">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Потребители <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li @if(request.uri.equals(controllers.admin.routes.Admin.listUsers().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.listUsers()">Виж всички</a></li>
-                    <li @if(request.uri.equals(controllers.admin.routes.Admin.createUser().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.createUser()">Добави нов</a></li>
-                    </ul>
+                            <li @if(request.uri.equals(controllers.admin.routes.Admin.createUser().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.createUser()">Добави нов</a></li>
+                        </ul>
                     </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">@session.get("username") <b class="caret"></b></a>
@@ -100,7 +96,7 @@
             <div class="panel-body">
 
 
-            <h1>Админ панел</h1>
+            <h1>Административен панел</h1>
 
             <div class="cold-md-12">
                 @if(flash.contains("success")) {

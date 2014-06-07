@@ -14,54 +14,61 @@
 
                 <li>
 
-                    <div class="book-cover huarang-cover">
+                    <div style="display: block; margin: 0; padding:0px; width:100%; height: auto;">
+
+                        <div class="book-cover huarang-cover">
+
+                        </div>
+
+                        <div class="book-title">
+                            Хуаранг и Кумихо
+                        </div>
+
+                        <div class="book-year">
+                           2011
+                        </div>
+
+                        <div class="book-author">
+                            от Лейдрин Суийвър
+                        </div>
+
+                        <div class="play-btn">
+                            <a href="@routes.Application.home()" class="btn btn-warning">Играй</a>
+                        </div>
 
                     </div>
-
-                    <div class="book-title">
-                        Хуаранг и Кумихо
-                    </div>
-
-                    <div class="book-year">
-                       2011
-                    </div>
-
-                    <div class="book-author">
-                        от Лейдрин Суийвър
-                    </div>
-
-                    <div class="play-btn">
-                        <a href="@routes.Application.home()" class="btn btn-warning">Играй</a>
-                    </div>
-
 
                 </li>
 
                 @for(gamebook <- gamebooks) {
 
                 <li>
-                    <div class="book-cover">
-                        @if(gamebook.getPicture() != null){
+                    <div style="display: block; margin: 0; padding:0px; width:100%; height: auto;">
+
+                        <div class="book-cover">
+                            @if(gamebook.getPicture() != null){
                             <img src="@routes.Assets.at(gamebook.getPicture())" class="img-responsive">
-                        } else {
+                            } else {
                             <img src='@routes.Assets.at("images/covers/no-cover.jpg")' class="img-responsive">
-                        }
-                    </div>
+                            }
+                        </div>
 
-                    <div class="book-title">
-                        @gamebook.getTitle()
-                    </div>
+                        <div class="book-title">
+                            @gamebook.getTitle()
+                        </div>
 
-                    <div class="book-year">
-                        (@gamebook.getYear())
-                    </div>
+                        <div class="book-year">
+                            (@gamebook.getYear())
+                        </div>
 
-                    <div class="book-author">
-                        от @gamebook.getAuthor
-                    </div>
+                        <div class="book-author">
+                            от @gamebook.getAuthor
+                        </div>
 
-                    <div class="play-btn">
-                        <a href="@controllers.routes.Library.displayGamebook(gamebook.getId())" class="btn btn-warning">Играй</a>
+                        <div class="play-btn">
+                            <a href="@controllers.routes.Library.displayGamebook(gamebook.getId())" class="btn btn-warning">Играй</a>
+                        </div>
+
                     </div>
 
                 </li>

@@ -128,26 +128,30 @@ a {
 
 .book-list{
     list-style: none;
-    display: inline;
-    margin-bottom: 100px;
+    padding: 0px;
 }
 
-ul .book-list{
-     display: inline;
-}
+/*ul .book-list{
+
+}*/
 
 ul.book-list li{
-    display: inline;
-    float: left;
+    display: inline-block;
+    /*float: left;*/
+    padding-top: 10px;
     margin-right: 20px;
-}
-
-.huarang-cover{
-    background: url(../images/huarang-cover.jpg);
 }
 
 ul.book-list li{
     text-align: center;
+}
+
+ul.book-list li:last-child{
+    margin-right: 0px;
+}
+
+.huarang-cover{
+    background: url(../images/huarang-cover.jpg);
 }
 
 .book-title{
@@ -189,5 +193,5 @@ ul.book-list li{
 }
 
 .hashtagbtn {
-    background: #9b59b6 !important;
+    background: url(../images/hashtag_eps.png) !important;
 }

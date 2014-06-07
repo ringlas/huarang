@@ -293,6 +293,7 @@ public class Admin extends Controller {
         User user = userForm.get();
         int userId = user.getId();
         String password = user.getPassword();
+        boolean changedPassword = false;
 
         if(password != null && !password.isEmpty()) {
             String confirmPassword = requestData.get("confirm_password");
@@ -303,11 +304,15 @@ public class Admin extends Controller {
             else {
                 // Encrypt the user password with SHA-1 algorithm and Application SALT
                 user.setPassword(Crypto.sign(user.getPassword()));
+                changedPassword = true;
             }
         }
 
         if(userId != 0) {
             // Update the user
+            if(!changedPassword) {
+                user.setPassword(null);
+            }
             user.update();
             flash("success", "Успешни промени!");
             return redirect(routes.Admin.editUser(userId));
