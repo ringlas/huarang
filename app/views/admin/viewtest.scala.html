@@ -1,0 +1,94 @@
+@(message: String)(test: Test)(questions: List[Question])
+
+@admin(".:: Преглед на потребител ::.") {
+
+    <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+
+    </script>
+
+    <div class="row">
+
+        <div class="clear"></div>
+
+        <div class="col-md-12">
+
+            <h2>Преглед на тест</h2>
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td> <strong>Заглавие име:</strong> </td>
+                        <td> @test.getTitle() </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Книга-игра:</strong> </td>
+                        <td> <span class="label label-info">@test.getGamebook().getTitle()</span> </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Максимум точки:</strong> </td>
+                        <td> @questions.size() </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="@controllers.admin.routes.Admin.listTests()" class="btn btn-default">Затвори</a>
+
+            <a href="@controllers.admin.routes.Admin.createQuestion(test.getId())" class="btn btn-primary">Добави въпрос</a>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h2>Въпроси</h2>
+
+            <table class="table table-striped">
+                <tr>
+                    <th>Въпрос</th>
+                    <th>Отговор "а)"</th>
+                    <th>Отговор "б)"</th>
+                    <th>Отговор "в)"</th>
+                    <th>Отговор "г)"</th>
+                    <th>Верен отговор</th>
+                    <th>Действие</th>
+                </tr>
+
+                @for(question <- questions) {
+                <tr>
+                    <td> @Html(question.getQuestion()) </td>
+                    <td> @Html(question.getAnswer_a()) </td>
+                    <td> @Html(question.getAnswer_b()) </td>
+                    <td> @Html(question.getAnswer_c()) </td>
+                    <td> @Html(question.getAnswer_d()) </td>
+                    <td>
+                        @question.getCorrect_answer() match {
+                            case 1 => { "a)" }
+                            case 2 => { "б)" }
+                            case 3 => { "в)" }
+                            case 4 => { "г)" }
+                        }
+                    </td>
+                    <td>
+
+                        <form method="post" action="@controllers.admin.routes.Admin.deleteQuestion(question.getId())">
+                            <a href="@controllers.admin.routes.Admin.editQuestion(question.getId())" class="btn btn-warning tooltipped" data-toggle="tooltip" data-placement="top" title="Редактирай"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <button type="submit" class="btn btn-danger tooltipped" data-toggle="tooltip" data-placement="top" title="Изтрий"><span class="glyphicon glyphicon-trash"></span></button>
+                        </form>
+                    </td>
+                </tr>
+                }
+            </table>
+
+
+        </div>
+
+    </div>
+
+}
+
+

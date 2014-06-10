@@ -12,6 +12,7 @@ import play.mvc.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.List;
@@ -352,17 +353,30 @@ public class Admin extends Controller {
     public static Result listTests() {
 
         List<Test> tests = Test.find.all();
+        List points = new ArrayList();
 
-        return ok(listtests.render("List all tests page!", tests));
+        for(int i = 0; i < tests.size(); i++) {
+            List<Question> questions = Question.find.where()
+                    .eq("test_id", tests.get(i).getId())
+                    .findList();
+            points.add(i, questions.size());
+        }
+
+        return ok(listtests.render("List all tests page!", tests, points));
     }
 
-//    @Security.Authenticated(Secured.class)
-//    public static Result viewUser(int id) {
-//
-//        User user = User.find.byId(id);
-//        return ok(viewuser.render("View user details page!", user));
-//    }
-//
+    @Security.Authenticated(Secured.class)
+    public static Result viewTest(int id) {
+
+        Test test = Test.find.byId(id);
+
+        List<Question> questions = Question.find.where()
+                .eq("test_id", id)
+                .findList();
+
+        return ok(viewtest.render("View test details page!", test, questions));
+    }
+
     @Security.Authenticated(Secured.class)
     public static Result createTest() {
 
@@ -370,14 +384,37 @@ public class Admin extends Controller {
 
         return ok(addtest.render("Add test page!", gamebooks));
     }
-//
-//    @Security.Authenticated(Secured.class)
-//    public static Result editUser(int id) {
-//
-//        User user = User.find.byId(id);
-//
-//        return ok(edituser.render("Edit user page!", user));
-//    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result editTest(int id) {
+
+        Test test = Test.find.byId(id);
+
+        List<Gamebook> gamebooks = Gamebook.find.all();
+
+        return ok(edittest.render("Edit test page!", gamebooks, test));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteTest(int id) {
+        Test test = Test.find.byId(id);
+
+        if(test != null) {
+            try {
+                test.delete();
+                flash("success", "Успешно изтрихте записа от базата данни.");
+                return redirect(routes.Admin.listTests());
+
+            } catch (Exception e) {
+                flash("error", "Възникна грешка. Моля, опитайте отново.");
+                return redirect(routes.Admin.listTests());
+            }
+        }
+        else {
+            flash("error", "Не съществува запис такова id.");
+            return redirect(routes.Admin.listTests());
+        }
+    }
 
     @Security.Authenticated(Secured.class)
     public static Result saveTest() {
@@ -396,19 +433,93 @@ public class Admin extends Controller {
         test.setGamebook(gamebook_id);
 
         if(test.getId() != 0) {
-            // Update the user
+            // Update the test
             test.update();
             flash("success", "Успешни промени!");
-//            return redirect(routes.Admin.editTest(testId));
             return redirect(routes.Admin.listTests());
 
         } else {
-            // Save the user
+            // Save the test
             test.save();
             flash("success", "Успешни промени!");
             return redirect(routes.Admin.listTests());
         }
     }
+
+    /************************* QUESTION LOGIC *****************************/
+
+    @Security.Authenticated(Secured.class)
+    public static Result createQuestion(int test_id) {
+
+        Test test = Test.find.byId(test_id);
+
+        return ok(addquestion.render("Add question page!", test));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result editQuestion(int id) {
+
+        Question question = Question.find.byId(id);
+
+        return ok(editquestion.render("Edit question page!", question));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result saveQuestion(int test_id) {
+
+        Form<Question> questionForm = Form.form(Question.class).bindFromRequest();
+
+        if(questionForm.hasErrors()){
+
+            flash("error", "Грешно попълнена форма. Моля, опитайте пак.");
+            return redirect(routes.Admin.createTest());
+        }
+
+        Test test = Test.find.byId(test_id);
+
+        Question question = questionForm.get();
+
+        question.setTest(test);
+
+        if(question.getId() != 0) {
+            // Update the question
+            question.update();
+            flash("success", "Успешни промени!");
+            return redirect(routes.Admin.viewTest(test_id));
+
+        } else {
+            // Save the question
+            question.save();
+            flash("success", "Успешни промени!");
+            return redirect(routes.Admin.viewTest(test_id));
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteQuestion(int id) {
+        Question question = Question.find.byId(id);
+
+        int test_id = question.getTest().getId();
+        question.setTest(null);
+
+        if(question != null) {
+            try {
+                question.delete();
+                flash("success", "Успешно изтрихте записа от базата данни.");
+                return redirect(routes.Admin.viewTest(test_id));
+
+            } catch (Exception e) {
+                flash("error", "Възникна грешка. Моля, опитайте отново.");
+                return redirect(routes.Admin.viewTest(test_id));
+            }
+        }
+        else {
+            flash("error", "Не съществува запис такова id.");
+            return redirect(routes.Admin.viewTest(test_id));
+        }
+    }
+
+    /************************* IMPORT BOOK LOGIC *****************************/
 
     @Security.Authenticated(Secured.class)
     public static Result importGamebook() {

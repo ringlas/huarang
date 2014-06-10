@@ -62,7 +62,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li @if(request.uri.equals(controllers.admin.routes.Admin.dashboard().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.dashboard()">Начало</a></li>
-                        <li class="dropdown @if(request.uri.equals(controllers.admin.routes.Admin.listGamebooks().toString()) || request.uri.equals(controllers.admin.routes.Admin.createGamebook().toString()) || request.uri.equals(controllers.admin.routes.Admin.importGamebook().toString())) { active }">
+                        <li class='dropdown @if(request.uri.contains("gamebook") || request.uri.contains("episode")) { active }'>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Книги-игри <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li @if(request.uri.equals(controllers.admin.routes.Admin.listGamebooks().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.listGamebooks()">Виж всички</a></li>
@@ -70,11 +70,18 @@
                                 <li @if(request.uri.equals(controllers.admin.routes.Admin.importGamebook().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.importGamebook()">Импортирай нова</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown @if(request.uri.equals(controllers.admin.routes.Admin.listUsers().toString()) || request.uri.equals(controllers.admin.routes.Admin.createUser().toString())) { active }">
+                        <li class='dropdown @if(request.uri.contains("user")) { active }'>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Потребители <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li @if(request.uri.equals(controllers.admin.routes.Admin.listUsers().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.listUsers()">Виж всички</a></li>
                                 <li @if(request.uri.equals(controllers.admin.routes.Admin.createUser().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.createUser()">Добави нов</a></li>
+                            </ul>
+                        </li>
+                        <li class='dropdown @if(request.uri.contains("test") || request.uri.contains("question") ) { active }'>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Тестове <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li @if(request.uri.equals(controllers.admin.routes.Admin.listTests().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.listTests()">Виж всички</a></li>
+                                <li @if(request.uri.equals(controllers.admin.routes.Admin.createTest().toString())) { class="active" }><a href="@controllers.admin.routes.Admin.createTest()">Добави нов</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

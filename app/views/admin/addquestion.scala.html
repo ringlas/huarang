@@ -1,0 +1,81 @@
+@(message: String)(test: Test)
+
+@admin(".:: Добави въпрос ::.") {
+
+    <script>
+        $(function() {
+            $("textarea").htmlarea({
+                toolbar: [
+                    ["html"],
+                    ["bold", "italic", "underline"], /* ["bold", "italic", "underline", "|", "link", "unlink", "|"] */
+                ]
+            });
+        });
+    </script>
+
+    <style>
+        .jHtmlArea { width:100% !important; }
+    </style>
+
+    <div class="row">
+
+        <div class="clear"></div>
+
+        <div class="col-md-12">
+
+            <h2> Добавяне на нов въпрос към тест "@test.getTitle()" </h2>
+
+            <form action="@controllers.admin.routes.Admin.saveQuestion(test.getId())" method="post" role="form">
+
+                <div class="form-group">
+                    <label for="question">Въведете въпроса:</label>
+                    <input id="test_id" class="form-control" type="hidden" name="test_id" value="@test.getId()">
+                    <textarea id="editor" name="question" id="question" class="form-control" rows="15"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="answer_a">Въведете отговор "а)"</label>
+                    <input id="answer_a" class="form-control" type="text" name="answer_a" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="answer_b">Въведете отговор "б)"</label>
+                    <input id="answer_b" class="form-control" type="text" name="answer_b" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="answer_c">Въведете отговор "в)"</label>
+                    <input id="answer_c" class="form-control" type="text" name="answer_c" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="answer_d">Въведете отговор "г)"</label>
+                    <input id="answer_d" class="form-control" type="text" name="answer_d" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="answer_d">Изберете верния отговор</label>
+
+                    <select name="correct_answer" id="correct_answer" class="form-control">
+                        <option value="1">"a)"</option>
+                        <option value="2">"б)"</option>
+                        <option value="3">"в)"</option>
+                        <option value="4">"г)"</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Запази</button>
+
+                <a href="@controllers.admin.routes.Admin.viewTest(test.getId())" class="btn btn-default">Затвори</a>
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+}
+
+

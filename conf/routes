@@ -44,6 +44,14 @@ POST    /admin/delete/user/:id              controllers.admin.Admin.deleteUser(i
 GET     /admin/list/tests                   controllers.admin.Admin.listTests()
 GET     /admin/add/test                     controllers.admin.Admin.createTest()
 POST    /admin/add/test                     controllers.admin.Admin.saveTest()
+GET     /admin/edit/test/:id                controllers.admin.Admin.editTest(id: Integer)
+GET     /admin/view/test/:id                controllers.admin.Admin.viewTest(id: Integer)
+POST    /admin/delete/test/:id              controllers.admin.Admin.deleteTest(id: Integer)
+
+GET     /admin/add/question/:test_id        controllers.admin.Admin.createQuestion(test_id: Integer)
+POST    /admin/add/question/:test_id        controllers.admin.Admin.saveQuestion(test_id: Integer)
+GET     /admin/edit/question/:id            controllers.admin.Admin.editQuestion(id: Integer)
+POST    /admin/delete/question/:id          controllers.admin.Admin.deleteQuestion(id: Integer)
 
 GET     /admin/import/gamebook              controllers.admin.Admin.importGamebook()
 POST    /admin/import/gamebook              controllers.admin.Admin.saveImportGamebook()

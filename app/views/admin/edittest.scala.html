@@ -1,0 +1,51 @@
+@(message: String)(gamebooks: List[Gamebook])(test: Test)
+
+@admin(".:: Редактирай тест ::.") {
+
+    <div class="row">
+
+        <div class="clear"></div>
+
+        <div class="col-md-12">
+
+            <h2>Редактиране на тест</h2>
+
+            <form action="@controllers.admin.routes.Admin.saveTest()" method="post" role="form">
+
+                <div class="form-group">
+                    <label for="title">Въведете заглавие на теста:</label>
+                    <input id="title" class="form-control" type="text" name="title" value="@test.getTitle()">
+                    <input id="id" class="form-control" type="hidden" name="id" value="@test.getId()">
+                </div>
+
+                <div class="form-group">
+                    <label for="gamebook_id">Изберете книга-игра:</label>
+
+                    <select id="gamebook_id" name="gamebook_id" class="form-control">
+
+                        <option value="@test.getGamebook().getId()">@test.getGamebook().getTitle()</option>
+
+                        @for(gamebook <- gamebooks) {
+
+                        <option value="@gamebook.getId()">@gamebook.getTitle()</option>
+
+                        }
+
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Запази</button>
+
+                <a href="@controllers.admin.routes.Admin.listTests()" class="btn btn-default">Затвори</a>
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+}
+
+
