@@ -1,0 +1,42 @@
+body{
+    background: #498bae;
+}
+#map{
+	background: url(../images/game-map.jpg);
+	width: 1200px;
+	height: 1200px;
+	position: relative;
+	margin: 0 auto;
+}
+
+#university, #library, #bar{
+	position: absolute;
+}
+#university{
+	background: url(../images/university.png) center top;
+	width: 175px;
+	height: 269px;
+	top: 275px;
+	left: 204px;
+}
+
+#library{
+	background: url(../images/library.png) center top;
+	width: 227px;
+	height: 255px;
+	top: 48px;
+	left: 480px;
+}
+
+#bar{
+	background: url(../images/bar.png) center top;
+	width: 192px;
+	height: 200px;
+	top: 312px;
+	left: 495px;
+}
+
+#university:hover, #library:hover, #bar:hover{
+	cursor: pointer;
+	background-position: center bottom;
+}

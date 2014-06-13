@@ -1,9 +1,7 @@
-@(form: Form[Application.Login])
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>.: Регистрация и Вход :.</title>
+    <title>ПУ Кампус</title>
 
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
@@ -12,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.css")">
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap-theme.css")">
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/jHtmlArea.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/map.css")">
     <!--<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/mediaQueries.css")">-->
 
     <!--[if lt IE 9]>
@@ -32,74 +30,11 @@
 
 </head>
 <body>
-<div class="container">
-    <h1 class="text-center">Онлайн библиотека<br>за книги-игри</h1>
 
-    <div class="cold-md-12">
-        @if(flash.contains("success")) {
-        <div class="alert alert-success">@flash.get("success")</div>
-        }
-        @if(flash.contains("error")) {
-        <div class="alert alert-danger">@flash.get("error")</div>
-        }
-    </div>
-    <div class="row header">
-        <div class="logo"></div>
-    </div>
-
-    <div class="login-panel">
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-4">
-
-                <h3> Създай акаунт: </h3>
-
-                <form class="login-form" method="post" action="@routes.Application.createUser()">
-                    <div class="form-group">
-                        <input type="text" name="username" class="form-control input" placeholder="Потребителско име">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control input" placeholder="Парола">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="confirm_password" class="form-control input" placeholder="Повтори парола">
-                    </div>
-                    <div class="form-group center">
-                        <button type="submit" class="btn btn-success">Регистрация</button>
-                    </div>
-                </form>
-
-
-            </div>
-            <div class="col-md-2">
-                <div class="vertical-separator"></div>
-            </div>
-
-            <div class="col-md-4 align-center">
-                <h3> Вход: </h3>
-                @helper.form(routes.Application.authenticate) {
-
-                <div class="form-group">
-                    <input type="text" name="username" class="form-control input" placeholder="Потребителско име">
-                </div>
-                <div class="form-group">
-                    <input type="password" name="password" class="form-control input" placeholder="Парола">
-                </div>
-                <div class="form-group center">
-                    <button class="btn btn-success">Вход</button>
-                </div>
-
-                }
-                @if(form.hasGlobalErrors) {
-                <p class="error">
-                    @form.globalError.message
-                </p>
-                }
-            </div>
-            <div class="col-md-1"></div>
-        </div>
-    </div>
-
+<div id="map">
+    <a href="#" role="button" data-content="And here's some amazing content. It's very engaging. right?" title="" data-toggle="popover" href="#" data-original-title="A Title"><div id="university" class="popover-object"></div></a>
+    <div id="library" class="popover-object"></div>
+    <div id="bar" class="popover-object"></div>
 </div>
 
 </body>

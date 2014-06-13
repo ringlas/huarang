@@ -166,6 +166,12 @@ ul.book-list li:last-child{
     height: 267px;
 }
 
+.img-cover{
+    max-height: 267px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .book-author{
     margin: 5px 0px 10px 0px;
 }

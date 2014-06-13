@@ -47,7 +47,7 @@
 
                         <div class="book-cover">
                             @if(gamebook.getPicture() != null){
-                            <img src="@routes.Assets.at(gamebook.getPicture())" class="img-responsive">
+                            <img src="@routes.Assets.at(gamebook.getPicture())" class="img-responsive img-cover">
                             } else {
                             <img src='@routes.Assets.at("images/covers/no-cover.jpg")' class="img-responsive">
                             }

@@ -96,4 +96,9 @@ public class Application extends Controller {
         }
 
     }
+
+    public static Result map() {
+        return ok(map.render());
+    }
+
 }

@@ -23,5 +23,8 @@ $(document).ready(function() {
         $("#add-word-input").val("");
         $("#add-word-input").attr("placeholder", "Добави кодова дума");
     });
+
+    $('.popover-object').popover();
+
     
 });
