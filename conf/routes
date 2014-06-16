@@ -10,7 +10,10 @@ GET     /login                              controllers.Application.login()
 POST    /login                              controllers.Application.authenticate()
 POST    /add                                controllers.Application.createUser()
 GET     /logout                             controllers.Application.logout()
-GET     /map                                controllers.Application.map()
+
+# Fmi pages
+
+GET     /fmi/map                            controllers.Fmi.map()
 
 # Library pages
 
