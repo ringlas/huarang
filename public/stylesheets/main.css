@@ -159,6 +159,7 @@ ul.book-list li:last-child{
     font-size: 24px;
     max-width: 200px;
     text-align: center;
+    margin: 0 auto;
 }
 
 .book-cover{

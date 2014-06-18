@@ -24,6 +24,7 @@ public class Library extends Controller {
 
         List<Gamebook> gamebooks = Gamebook.find.where()
                 .ne("title", "ХУАРАНГ И КУМИХО")
+                .ne("title", "Факултетът на бъдещето")
                 .findList();
 
         return ok(dashboard.render("Dashboard page!", gamebooks));

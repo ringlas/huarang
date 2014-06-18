@@ -13,7 +13,13 @@ GET     /logout                             controllers.Application.logout()
 
 # Fmi pages
 
+GET     /fmi                                controllers.Fmi.home()
 GET     /fmi/map                            controllers.Fmi.map()
+GET     /fmi/gamebook/:id                   controllers.Fmi.displayGamebook(id: Integer)
+GET     /fmi/gamebook/:id/start             controllers.Fmi.startGame(id: Integer, replay: Boolean)
+GET     /fmi/gamebook/:id/generate/:number  controllers.Fmi.generateEpisode(id: Integer, number: Integer)
+GET     /fmi/gamebook/:id/display/:number   controllers.Fmi.displayEpisode(id: Integer, number: Integer)
+POST    /fmi/gamebook/:id/display/:number   controllers.Fmi.updateCharSheet(id: Integer, number: Integer)
 
 # Library pages
 

@@ -1,0 +1,25 @@
+@(gamebook: Gamebook)
+
+@layout(".:: Чети книга-игра ::.") {
+
+<div class="row">
+
+    <div class="col-md-12 episode">
+
+        <h3>@gamebook.getTitle()</h3>
+
+        <p> @Html(gamebook.getIntro()) </p>
+
+        <p>
+
+            <a href="@controllers.routes.Fmi.startGame(gamebook.getId(), true)" class="btn btn-info">Започни нова игра!</a>
+
+            <a href="@controllers.routes.Fmi.startGame(gamebook.getId(), false)" class="btn btn-warning">Продължи стара игра!</a>
+        </p>
+
+    </div>
+
+</div>
+
+}
+

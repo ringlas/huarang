@@ -1,0 +1,115 @@
+@(gamebook_id: Integer)(number: Integer)(characterSheet: CharacterSheet)
+
+@layout(".:: Книга-игра ::.") {
+
+<script type="text/javascript">
+
+            $.ajax({
+              dataType: "json",
+              url: '@routes.Fmi.generateEpisode(gamebook_id, number)',
+              data: 1,
+              success: function(response){
+                jsonData = response;
+                displayEpisode(jsonData);
+              }
+            });
+
+            function replaceAll(find, replace, str) {
+                return str.replace(new RegExp(find, 'g'), replace);
+            }
+
+            function displayEpisode(data){
+
+                data.text = fixLinks(data.text);
+
+                $('.episode').html('<h1 class="episode-title text-center"> .: Епизод ' + @number + ' :. </h1>' + data.text);
+            }
+
+            function fixLinks(paragraph) {
+
+                re = new RegExp(/###(\d+)###/g);
+
+                paragraph = paragraph.replace(re, replacer);
+
+                return paragraph;
+            }
+
+            function replacer(match, p1, offset, string){
+
+                str = "<a href='/fmi/gamebook/" + @gamebook_id + "/display/" + p1 + "' class='go-to-section'>" + p1 + "</a>";
+
+                return str;
+            }
+
+
+</script>
+
+<script>
+        $(function() {
+            $("#notes, #codewords").each(function(){
+                $(this).htmlarea({
+                    toolbar: [
+                        ["html"],
+                        ["bold", "italic", "underline"], /* ["bold", "italic", "underline", "|", "link", "unlink", "|"] */
+                    ]
+                });
+            });
+        });
+</script>
+
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h3>Дневник на приключението:</h3>
+
+            <div>
+                <p>
+                    <strong>Материали:</strong>
+                </p>
+                <p>
+                    <a href="@routes.Fmi.map()" class="btn btn-success"> <span class="glyphicon glyphicon-map-marker"></span> Карта </a>
+                </p>
+            </div>
+
+            <form action="@routes.Fmi.updateCharSheet(gamebook_id, number)" method="post" role="form">
+
+                <div class="form-group">
+                    <input type="hidden" name="id" value="@characterSheet.getId()">
+                    <label for="notes">Бележки:</label>
+                    <textarea id="notes" class="form-control" name="notes" rows="3">
+                        @characterSheet.getNotes()
+                    </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="codewords">Кодови думи:</label>
+                    <textarea id="codewords" class="form-control" name="codewords" rows="3">
+                        @characterSheet.getCodewords()
+                    </textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" name="submit" class="btn btn-primary">Запази</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-12 episode">
+
+        </div>
+    </div>
+</div>
+<div class="footer-logo"></div>
+
+
+}
+
