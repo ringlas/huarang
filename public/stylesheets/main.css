@@ -202,3 +202,7 @@ ul.book-list li:last-child{
 .hashtagbtn {
     background: url(../images/hashtag_eps.png) !important;
 }
+
+.question {
+    padding: 20px 10px 10px 10px;
+}

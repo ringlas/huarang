@@ -20,6 +20,8 @@ GET     /fmi/gamebook/:id/start             controllers.Fmi.startGame(id: Intege
 GET     /fmi/gamebook/:id/generate/:number  controllers.Fmi.generateEpisode(id: Integer, number: Integer)
 GET     /fmi/gamebook/:id/display/:number   controllers.Fmi.displayEpisode(id: Integer, number: Integer)
 POST    /fmi/gamebook/:id/display/:number   controllers.Fmi.updateCharSheet(id: Integer, number: Integer)
+GET     /fmi/test/:id                       controllers.Fmi.test(id: Integer)
+POST    /fmi/test/:id                       controllers.Fmi.calculateScore(id: Integer)
 
 # Library pages
 

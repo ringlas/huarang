@@ -1,8 +1,7 @@
 package controllers;
 
-import models.CharacterSheet;
-import models.Episode;
-import models.Gamebook;
+import models.*;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -10,7 +9,9 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import views.html.fmi.*;
 
@@ -37,13 +38,32 @@ public class Fmi extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result displayEpisode(int gamebook_id, int number) {
 
-        CharacterSheet characterSheet = CharacterSheet.find.where()
+        CharacterSheetFmi characterSheet = CharacterSheetFmi.find.where()
                 .eq("user_id", Integer.parseInt(session().get("user_id")))
                 .eq("gamebook_id", gamebook_id)
                 .findUnique();
 
+        int currentTime = characterSheet.getTime();
+
+        switch (number) {
+            case 4 : currentTime = currentTime - 2; break;
+            case 5 : currentTime = currentTime - 3; break;
+            case 6 : currentTime = currentTime - 3; break;
+            case 8 : currentTime = currentTime - 1; break;
+            case 9 : currentTime = currentTime + 1; break;
+        }
+
+        if(currentTime < 0) {
+            currentTime = 0;
+        }
+
+        characterSheet.setTime(currentTime);
         characterSheet.setCurrentEpisode(number);
         characterSheet.update();
+
+        if(currentTime == 0) {
+            return redirect(routes.Fmi.test(gamebook_id));
+        }
 
         return ok(gamebook.render(gamebook_id, number, characterSheet));
     }
@@ -86,7 +106,7 @@ public class Fmi extends Controller {
 
         try {
 
-            CharacterSheet characterSheet = Form.form(CharacterSheet.class).bindFromRequest().get();
+            CharacterSheetFmi characterSheet = Form.form(CharacterSheetFmi.class).bindFromRequest().get();
 
             // Set the User related to that character sheet
             characterSheet.setUser(Integer.parseInt(session().get("user_id")));
@@ -109,7 +129,7 @@ public class Fmi extends Controller {
         // Check to see if player wants to continue from last milestone
         // Or start a new game all over again with new char sheet
 
-        CharacterSheet characterSheetOld = CharacterSheet.find.where()
+        CharacterSheetFmi characterSheetOld = CharacterSheetFmi.find.where()
                 .eq("user_id", Integer.parseInt(session().get("user_id")))
                 .eq("gamebook_id", id)
                 .findUnique();
@@ -123,12 +143,13 @@ public class Fmi extends Controller {
 
             Date currentDate = new Date();
 
-            CharacterSheet characterSheet = new CharacterSheet();
+            CharacterSheetFmi characterSheet = new CharacterSheetFmi();
             characterSheet.setCurrentEpisode(1);
             characterSheet.setGamebook(id);
             characterSheet.setDateCreated(currentDate.toString());
             characterSheet.setCodewords("");
             characterSheet.setNotes("");
+            characterSheet.setTime(5);
             characterSheet.setUser(Integer.parseInt(session().get("user_id")));
 
             characterSheet.save();
@@ -146,6 +167,57 @@ public class Fmi extends Controller {
                 return redirect(routes.Fmi.displayGamebook(id));
             }
         }
+    }
+
+    /**
+     * Method displaying the exam test
+     *
+     * @param gamebook_id
+     * @return
+     */
+    @Security.Authenticated(Secured.class)
+    public static Result test(int gamebook_id) {
+
+        CharacterSheetFmi characterSheet = CharacterSheetFmi.find.where()
+                .eq("user_id", Integer.parseInt(session().get("user_id")))
+                .eq("gamebook_id", gamebook_id)
+                .findUnique();
+
+        Test test = Test.find.where()
+                .eq("gamebook_id", gamebook_id)
+                .findUnique();
+
+        List<Question> questions = Question.find.where()
+                .eq("test_id", test.getId())
+                .findList();
+
+        return ok(testpage.render(questions, characterSheet));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result calculateScore(int gamebook_id) {
+
+        DynamicForm requestData = Form.form().bindFromRequest();
+
+        Map<String, String> data = requestData.get().getData();
+
+        Test test = Test.find.where()
+                .eq("gamebook_id", gamebook_id)
+                .findUnique();
+
+        List<Question> questions = Question.find.where()
+                .eq("test_id", test.getId())
+                .findList();
+
+        return ok();
+
+//        if(characterSheetOld != null) {
+//            return redirect(routes.Fmi.displayEpisode(id, characterSheetOld.getCurrentEpisode()));
+//        }
+//        else {
+//            flash("error", "Няма намерен дневник за тази книга-игра!");
+//            return redirect(routes.Fmi.displayGamebook(id));
+//        }
     }
 
 }

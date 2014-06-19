@@ -1,0 +1,62 @@
+@(questions: List[Question])(characterSheet: CharacterSheetFmi)
+
+@layout(".:: Книга-игра ::.") {
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <h3>Изпитна сесия за пролетен триместър, 4-ти курс</h3>
+
+        </div>
+
+        <div class="col-md-4">
+            <h3>Време:</h3>
+            <strong> @characterSheet.getTime() </strong>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <form method="post" action="">
+
+                @for(question <- questions) {
+
+                <div class="question">
+
+                    <div class="title">
+                        <p><strong>@question.getQuestion()</strong></p>
+                    </div>
+
+                    <div class="radio">
+                        <input type="radio" name="data[@question.getId()]" value="1" checked> @question.getAnswer_a()
+                    </div>
+
+                    <div class="radio">
+                        <input type="radio" name="data[@question.getId()]" value="2"> @question.getAnswer_b()
+                    </div>
+
+                    <div class="radio">
+                        <input type="radio" name="data[@question.getId()]" value="3"> @question.getAnswer_c()
+                    </div>
+
+                    <div class="radio">
+                        <input type="radio" name="data[@question.getId()]" value="4"> @question.getAnswer_d()
+                    </div>
+
+                </div>
+                }
+
+                <button type="submit" class="btn btn-primary">Приключи тест</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+}
+
