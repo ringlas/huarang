@@ -8,10 +8,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import views.html.fmi.*;
 
@@ -201,23 +198,68 @@ public class Fmi extends Controller {
 
         Map<String, String> data = requestData.get().getData();
 
-        Test test = Test.find.where()
+        int points = calculateScore(data, gamebook_id);
+
+        CharacterSheetFmi characterSheet = CharacterSheetFmi.find.where()
+                .eq("user_id", Integer.parseInt(session().get("user_id")))
                 .eq("gamebook_id", gamebook_id)
                 .findUnique();
 
-        List<Question> questions = Question.find.where()
-                .eq("test_id", test.getId())
+        characterSheet.setPoints(points);
+        characterSheet.update();
+
+        return redirect(routes.Fmi.rating(gamebook_id));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result rating(int gamebook_id) {
+
+        CharacterSheetFmi characterSheet = CharacterSheetFmi.find.where()
+                .eq("user_id", Integer.parseInt(session().get("user_id")))
+                .eq("gamebook_id", gamebook_id)
+                .findUnique();
+
+        List<CharacterSheetFmi> characterSheets = CharacterSheetFmi.find.where()
                 .findList();
 
-        return ok();
+        return ok(successpage.render(characterSheet, characterSheets));
+    }
 
-//        if(characterSheetOld != null) {
-//            return redirect(routes.Fmi.displayEpisode(id, characterSheetOld.getCurrentEpisode()));
-//        }
-//        else {
-//            flash("error", "Няма намерен дневник за тази книга-игра!");
-//            return redirect(routes.Fmi.displayGamebook(id));
-//        }
+    private static int calculateScore(Map<String, String> data, int gamebook_id) {
+
+        int points = 0;
+
+        try {
+
+            Test test = Test.find.where()
+                    .eq("gamebook_id", gamebook_id)
+                    .findUnique();
+
+            List<Question> questions = Question.find.where()
+                    .eq("test_id", test.getId())
+                    .findList();
+
+            Iterator it = data.entrySet().iterator();
+            while(it.hasNext()) {
+                Map.Entry pairs = (Map.Entry)it.next();
+
+                Question question = Question.find.byId(Integer.parseInt(pairs.getKey().toString()));
+
+                int value = Integer.parseInt(pairs.getValue().toString());
+
+                if(question.getCorrect_answer() == value) {
+                    points++;
+                }
+
+                it.remove();
+            }
+        }
+
+        catch(Exception e) {
+            return 0;
+        }
+
+        return points;
     }
 
 }
