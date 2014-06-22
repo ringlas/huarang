@@ -19,7 +19,12 @@ public class Fmi extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result map() {
-        return ok(map.render());
+
+        Gamebook gamebook = Gamebook.find.where()
+                .eq("title", "Факултетът на бъдещето")
+                .findUnique();
+
+        return ok(map.render(gamebook));
     }
 
     @Security.Authenticated(Secured.class)
@@ -214,15 +219,18 @@ public class Fmi extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result rating(int gamebook_id) {
 
+        User user = User.find.byId(Integer.parseInt(session().get("user_id")));
+
         CharacterSheetFmi characterSheet = CharacterSheetFmi.find.where()
                 .eq("user_id", Integer.parseInt(session().get("user_id")))
                 .eq("gamebook_id", gamebook_id)
                 .findUnique();
 
         List<CharacterSheetFmi> characterSheets = CharacterSheetFmi.find.where()
+                .orderBy("points")
                 .findList();
 
-        return ok(successpage.render(characterSheet, characterSheets));
+        return ok(successpage.render(characterSheet, characterSheets, user));
     }
 
     private static int calculateScore(Map<String, String> data, int gamebook_id) {

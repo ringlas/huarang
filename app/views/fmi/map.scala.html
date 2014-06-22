@@ -1,3 +1,4 @@
+@(gamebook: Gamebook)
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,17 +35,17 @@
 
             // University click goes to episode for lections
             $("#university").click(function(){
-                location.href = "/fmi/gamebook/8/display/1";
+                location.href = "/fmi/gamebook/@gamebook.getId()/display/1";
             });
 
             // University click goes to episode for lections
             $("#library").click(function(){
-                location.href = "/fmi/gamebook/8/display/1";
+                location.href = "/fmi/gamebook/@gamebook.getId()/display/1";
             });
 
             // University click goes to episode for lections
             $("#bar").click(function(){
-                location.href = "/fmi/gamebook/8/display/1";
+                location.href = "/fmi/gamebook/@gamebook.getId()/display/1";
             });
 
             $('.popover-object').popover({

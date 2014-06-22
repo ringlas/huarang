@@ -1,4 +1,4 @@
-@(characterSheet: CharacterSheetFmi)(characterSheets: List[CharacterSheetFmi] )
+@(characterSheet: CharacterSheetFmi)(characterSheets: List[CharacterSheetFmi] )(user: User)
 
 @layout(".:: Книга-игра ::.") {
 
@@ -6,9 +6,44 @@
 
         <div class="col-md-12">
 
-            Congrats!
+            <h2>Успешно предаден изпит, @user.getUsername()</h2>
 
-            @characterSheet.getPoints()
+            <br>
+
+            <p>Постигна резултат от <strong>@characterSheet.getPoints() точки</strong> на изпита си.</p>
+
+            <p>Ако не се чувстваш удовлетворен от резултата си, можеш да се пробваш отначало тук.</p>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h2>Класация</h2>
+
+            <table class="table">
+
+                <tr>
+                    <th>Потребител</th>
+                    <th>Точки</th>
+                </tr>
+
+                @for(characters <- characterSheets) {
+
+                <tr>
+                    <td>
+                        @characters.getUser().getUsername()
+                    </td>
+                    <td>
+                        @characters.getPoints()
+                    </td>
+                </tr>
+                }
+
+            </table>
 
         </div>
 

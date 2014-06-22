@@ -46,6 +46,10 @@ public class CharacterSheetFmi extends Model {
         this.gamebook = gamebook;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
