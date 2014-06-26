@@ -136,6 +136,7 @@ a {
 }*/
 
 ul.book-list li{
+    vertical-align: top;
     display: inline-block;
     /*float: left;*/
     padding-top: 10px;
@@ -152,6 +153,10 @@ ul.book-list li:last-child{
 
 .huarang-cover{
     background: url(../images/huarang-cover.jpg);
+}
+
+.fmi-cover{
+    background: url(../images/covers/map_cover.jpg);
 }
 
 .book-title{

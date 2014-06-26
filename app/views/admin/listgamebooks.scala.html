@@ -44,9 +44,9 @@
                         <td>@gamebook.getDateCreated()</td>
                         <td>
                             <form method="post" action="@controllers.admin.routes.Admin.deleteGamebook(gamebook.getId())">
-                                <a href="@controllers.admin.routes.Admin.viewGamebook(gamebook.getId())" class="btn btn-info">Прегледай</a>
-                                <a href="@controllers.admin.routes.Admin.editGamebook(gamebook.getId())" class="btn btn-warning">Редактирай</a>
-                                <button type="submit" class="btn btn-danger">Изтрий</button>
+                                <a href="@controllers.admin.routes.Admin.viewGamebook(gamebook.getId())" class="btn btn-info"> <span class="glyphicon glyphicon-share-alt"></span> </a>
+                                <a href="@controllers.admin.routes.Admin.editGamebook(gamebook.getId())" class="btn btn-warning"> <span class="glyphicon glyphicon-pencil"></span> </a>
+                                <button type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span> </button>
                             </form>
                         </td>
                     </tr>
